@@ -12,6 +12,7 @@
 package com.heliosphere.demeter.base.resource;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  * Provides an abstract implementation of a resource.
@@ -36,14 +37,87 @@ public abstract class AbstractResource implements IResource
 	 * <hr>
 	 * @param pathname Resource pathname.
 	 */
-	public AbstractResource(String pathname)
+	@SuppressWarnings("nls")
+	public AbstractResource(String pathname) throws ResourceException
 	{
-		file = new File(pathname);
+		if (!loadAbsolute(pathname))
+		{
+			if (!loadRelative(pathname))
+			{
+				if (!loadRelativeSeparator(pathname))
+				{
+					throw new ResourceException(String.format("The resource specified by the path name: %1s can not be found", pathname));
+				}
+			}
+		}
 	}
 
 	@Override
 	public File getFile()
 	{
 		return file;
+	}
+
+	/**
+	 * Loads the file considering its pathname is absolute.
+	 * <hr>
+	 * @param pathname Resource path name.
+	 * @return {@code True} if the resource can be loaded, {@code false} otherwise.
+	 */
+	private final boolean loadAbsolute(String pathname)
+	{
+		this.file = new File(pathname);
+
+		return this.file.exists();
+	}
+
+	/**
+	 * Loads the file considering its pathname is relative.
+	 * <hr>
+	 * @param pathname Resource path name.
+	 * @return {@code True} if the resource can be loaded, {@code false} otherwise.
+	 */
+	private final boolean loadRelative(String pathname)
+	{
+		// Maybe the file pathname is relative.
+		URL url = Thread.currentThread().getContextClassLoader().getResource(pathname);
+
+		try
+		{
+			this.file = new File(url.toURI());
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
+
+		return this.file.exists();
+	}
+
+	/**
+	 * Loads the file considering its pathname is relative.
+	 * <hr>
+	 * @param pathname Resource path name.
+	 * @return {@code True} if the resource can be loaded, {@code false} otherwise.
+	 */
+	@SuppressWarnings("nls")
+	private final boolean loadRelativeSeparator(String pathname)
+	{
+		// Try to remove the leading file separator, if one exist.
+		if (pathname.startsWith(File.separator))
+		{
+			try
+			{
+				// Maybe the file pathname is relative.
+				URL url = Thread.currentThread().getContextClassLoader().getResource(pathname.replaceFirst(File.separator, ""));
+				this.file = new File(url.toURI());
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+		}
+
+		return this.file.exists();
 	}
 }

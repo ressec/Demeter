@@ -28,8 +28,9 @@ public class Resource extends AbstractResource
 	 * Creates a new resource.
 	 * <hr>
 	 * @param pathname Resource pathname (ex.: {@code c:/temp/file.txt}).
+	 * @throws ResourceException Thrown to indicate an error occurred when trying to access a resource.
 	 */
-	public Resource(String pathname)
+	public Resource(String pathname) throws ResourceException
 	{
 		super(pathname);
 	}

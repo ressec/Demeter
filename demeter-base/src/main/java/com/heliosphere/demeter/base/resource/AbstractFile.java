@@ -33,8 +33,9 @@ public class AbstractFile implements IFile
 	 * Creates a new abstract file.
 	 * <hr>
 	 * @param pathname File pathname.
+	 * @throws ResourceException Thrown to indicate an error occurred when trying to access a resource.
 	 */
-	public AbstractFile(String pathname)
+	public AbstractFile(String pathname) throws ResourceException
 	{
 		resource = new Resource(pathname);
 	}

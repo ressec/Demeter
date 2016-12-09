@@ -28,8 +28,9 @@ public class File extends AbstractFile
 	 * Creates a new file.
 	 * <hr>
 	 * @param pathname File pathname.
+	 * @throws ResourceException Thrown to indicate an error occurred when trying to access a resource.
 	 */
-	public File(String pathname)
+	public File(String pathname) throws ResourceException
 	{
 		super(pathname);
 	}
