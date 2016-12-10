@@ -29,13 +29,6 @@ variables:
 
 script: 
   mvn test install -f demeter-parent/pom.xml
-  make dist
 
 jdk:
   oraclejdk7
-
-deploy:
-  provider: releases
-  file: 'release.zip' 
-  skip_cleanup: true
-  on: tags    
