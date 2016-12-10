@@ -36,7 +36,6 @@ jdk:
 
 deploy:
   provider: releases
-    api_key: 184c696644623e51ae21259c3cee8ff2f395ce74
   file: 'release.zip' 
   skip_cleanup: true
   on: tags    
