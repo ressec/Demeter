@@ -28,18 +28,18 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true -f demeter-parent/pom.xml"
 
 script: 
-  mvn clean install -f demeter-parent/pom.xml
+  mvn clean install deploy -f demeter-parent/pom.xml
 
 jdk:
   oraclejdk7
 
 deploy:
-  provider: releases
-  api_key: "969e6b065c656d24e55c9661337254c03a427332"
-  file: 
-    - demeter-parent.pom
-    - demeter-base.jar
+#  provider: releases
+#  api_key: "969e6b065c656d24e55c9661337254c03a427332"
+#  file: 
+#    - demeter-parent.pom
+#    - demeter-base.jar
   skip_cleanup: true
-  on:
-    tags: true
+#  on:
+#    tags: true
   
