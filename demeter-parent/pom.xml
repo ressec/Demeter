@@ -233,7 +233,7 @@
 
 	<repositories>
 		<repository>
-			<id>Ddmeter-mvn-repo</id>
+			<id>dmeter-mvn-repo</id>
 			<url>https://raw.github.com/ressec/demeter/mvn-repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
