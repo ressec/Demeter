@@ -28,8 +28,16 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true -f demeter-parent/pom.xml"
 
 script: 
-  mvn test install deploy -f demeter-parent/pom.xml
+  mvn test install -f demeter-parent/pom.xml
+  make dist
 
 jdk:
   oraclejdk7
-  
+
+deploy:
+  provider: releases
+    api_key:
+      secure: "v3L3s8fJF+kaVv3ke/7n2wM+QI4EhLmoEAX6WRNkVTmOgS9LUkvrdSe3WSiyO3sgqPf2NnkJevn8bfNpvudX/peq02xY2Ow1ZlN4bzQi0e/5WbN0rmpjiQY2ppztbu03VdH4JS8l6k2hREex1m/7PQBLLniVXN76OkxQlJoM8Mx6TtzYPgshYrMNlaCowKhHdRpaXtmtos1Fk9taZVAQydUMdOuPi2H34iWPX6wLbjOKGMDGqsI0ySU5MAIVKMWEp96hk2JtrGGu5fw87Wf9HoKbpzBxd4cCrrjUvs5uz64w08PAhrFt5YNOZwW1XzsXEV0LG4y8e201SbnUsC8IbZq4UPtXGir0f3oPQXuk9O50bGImmuTbikbGoyxoTfwmSq4xpuwtT6f+h9h4fjjCZ2QAfNJ+79VvPkLbBEJ96ksbQ4kRDhYzmCEZhse6X4U0mjnzxU932MVNTlDoZNiPrd4tY95Sqvc+tWYBo1lzIIqYPEX9bGJSa+oEyZ7wHldhzHO9yYTFMF+tKWuDjnXysVmkOg0q9JnGE5davfeITGbuguwJz7OVoaHrY2HJ2b2gGp3xQgGupDl0F8eU+/S9fzARShAAIOm9nV7xezXVe6evEfevoYPAS3c+PYBoOmYyzSvSt/x7tZeMCX/ffPJ5aPAGf9BngTbm1pOhWew6AKY="
+  file: 'release.zip' 
+  skip_cleanup: true
+  on: tags    
