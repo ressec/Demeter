@@ -212,7 +212,7 @@
 	<properties>
 		<github.global.server>github</github.global.server>
 	</properties>
-	
+
 	<scm>
 		<url>scm:git:git@github.com:ressec/demeter.git</url>
 		<connection>scm:git:git@github.com:ressec/demeter.git</connection>
@@ -230,4 +230,16 @@
 		<system>Travis CI</system>
 		<url>https://travis-ci.org/ressec/demeter</url>
 	</ciManagement>
+
+	<repositories>
+		<repository>
+			<id>Ddmeter-mvn-repo</id>
+			<url>https://raw.github.com/ressec/demeter/mvn-repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
 </project>
