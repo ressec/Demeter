@@ -28,7 +28,7 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true -f demeter-parent/pom.xml"
 
 script: 
-  mvn test install -f demeter-parent/pom.xml
+  mvn clean deploy -f demeter-parent/pom.xml
 
 jdk:
   oraclejdk7
