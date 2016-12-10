@@ -15,8 +15,8 @@
 # * Uses site:stage to collect the documentation for multi-module projects.
 # * Publishes the documentation for `master` branch.
 
-language:
-  JAVA
+language: 
+  java
 
 variables:
   # This will supress any download for dependencies and plugins or upload messages which would clutter the console log.
