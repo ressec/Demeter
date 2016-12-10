@@ -33,13 +33,36 @@ script:
 jdk:
   oraclejdk7
 
-deploy:
+#deploy:
 #  provider: releases
 #  api_key: "969e6b065c656d24e55c9661337254c03a427332"
 #  file: 
 #    - demeter-parent.pom
 #    - demeter-base.jar
-  skip_cleanup: true
+#  skip_cleanup: true
 #  on:
 #    tags: true
+    
+before_deploy:
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=$TRAVIS_BRANCH-v0.1.$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push -q https://969e6b065c656d24e55c9661337254c03a427332@github.com/ressec/demeter --tags
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: "v3L3s8fJF+kaVv3ke/7n2wM+QI4EhLmoEAX6WRNkVTmOgS9LUkvrdSe3WSiyO3sgqPf2NnkJevn8bfNpvudX/peq02xY2Ow1ZlN4bzQi0e/5WbN0rmpjiQY2ppztbu03VdH4JS8l6k2hREex1m/7PQBLLniVXN76OkxQlJoM8Mx6TtzYPgshYrMNlaCowKhHdRpaXtmtos1Fk9taZVAQydUMdOuPi2H34iWPX6wLbjOKGMDGqsI0ySU5MAIVKMWEp96hk2JtrGGu5fw87Wf9HoKbpzBxd4cCrrjUvs5uz64w08PAhrFt5YNOZwW1XzsXEV0LG4y8e201SbnUsC8IbZq4UPtXGir0f3oPQXuk9O50bGImmuTbikbGoyxoTfwmSq4xpuwtT6f+h9h4fjjCZ2QAfNJ+79VvPkLbBEJ96ksbQ4kRDhYzmCEZhse6X4U0mjnzxU932MVNTlDoZNiPrd4tY95Sqvc+tWYBo1lzIIqYPEX9bGJSa+oEyZ7wHldhzHO9yYTFMF+tKWuDjnXysVmkOg0q9JnGE5davfeITGbuguwJz7OVoaHrY2HJ2b2gGp3xQgGupDl0F8eU+/S9fzARShAAIOm9nV7xezXVe6evEfevoYPAS3c+PYBoOmYyzSvSt/x7tZeMCX/ffPJ5aPAGf9BngTbm1pOhWew6AKY="
+  file:
+    - "demeter-parent.pom"
+    - "demeter-base.jar"
+  on:
+    tags: false
+    all_branches: true
+
+branches:
+  except:
+    - /^*-v[0-9]/
   
