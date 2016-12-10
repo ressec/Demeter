@@ -213,4 +213,21 @@
 		<github.global.server>github</github.global.server>
 	</properties>
 	
+	<scm>
+		<url>scm:git:git@github.com:ressec/demeter.git</url>
+		<connection>scm:git:git@github.com:ressec/demeter.git</connection>
+		<developerConnection>scm:git:git@github.com:ressec/demeter.git</developerConnection>
+	</scm>
+	<organization>
+		<name>Heliosphere</name>
+	</organization>
+	<inceptionYear>2016</inceptionYear>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/ressec/demeter/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/ressec/demeter</url>
+	</ciManagement>
 </project>
