@@ -29,3 +29,7 @@ variables:
 
 script: 
   mvn test -f demeter-parent/pom.xml
+
+jdk:
+  oraclejdk7
+  
