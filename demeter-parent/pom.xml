@@ -12,6 +12,28 @@
 		<module>../demeter-base</module>
 	</modules>
 
+	<scm>
+		<url>scm:git:git@github.com:ressec/demeter.git</url>
+		<connection>scm:git:git@github.com:ressec/demeter.git</connection>
+		<developerConnection>scm:git:git@github.com:ressec/demeter.git</developerConnection>
+	</scm>
+	
+	<organization>
+		<name>Heliosphere</name>
+	</organization>
+	
+	<inceptionYear>2016</inceptionYear>
+	
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/ressec/demeter/issues</url>
+	</issueManagement>
+	
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/ressec/demeter</url>
+	</ciManagement>
+
 	<dependencies>
 
 		<dependency>
@@ -19,12 +41,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>de.jutzig</groupId>
-			<artifactId>github-release-plugin</artifactId>
-			<version>1.1.1</version>
 		</dependency>
 
 	</dependencies>
@@ -162,29 +178,6 @@
 					<version>2.5.3</version>
 				</plugin>
 
-				<plugin>
-					<groupId>de.jutzig</groupId>
-					<artifactId>github-release-plugin</artifactId>
-					<version>1.1.1</version>
-					<configuration>
-						<description>Description of your release</description>
-						<releaseName>1.0 Final</releaseName>
-						<tag>${project.version}</tag>
-
-						<!-- If your project has additional artifacts, such as ones produced by the maven-assembly-plugin, you can define the 
-							following (requires version 1.1.1 of the plugin or higher): -->
-						<fileSets>
-							<fileSet>
-								<directory>${project.build.directory}</directory>
-								<includes>
-									<include>${project.artifactId}*.tar.gz</include>
-									<include>${project.artifactId}*.zip</include>
-								</includes>
-							</fileSet>
-						</fileSets>
-					</configuration>
-				</plugin>
-
 			</plugins>
 
 		</pluginManagement>
@@ -192,9 +185,10 @@
 	</build>
 
 	<repositories>
+	
 		<repository>
-			<id>ressec-snapshots</id>
-			<url>https://raw.github.com/ressec/mvn-repo/master/snapshots</url>
+			<id>nexus-snapshots</id>
+			<url>http://83.153.27.91:9086/nexus/content/groups/public-snapshots</url>
 			<releases>
 				<enabled>false</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -206,8 +200,9 @@
 				<checksumPolicy>fail</checksumPolicy>
 			</snapshots>
 		</repository>
+	
 		<repository>
-			<id>ressec-releases</id>
+			<id>nexus-releases</id>
 			<releases>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -218,34 +213,29 @@
 				<updatePolicy>always</updatePolicy>
 				<checksumPolicy>warn</checksumPolicy>
 			</snapshots>
-			<url>https://raw.github.com/ressec/mvn-repo/master/releases</url>
+			<url>http://83.153.27.91:9086/nexus/content/groups/public</url>
 		</repository>
+	
 	</repositories>
 
 	<pluginRepositories>
-
 	</pluginRepositories>
 
-	<properties>
-		<github.global.server>github</github.global.server>
-	</properties>
-
-	<scm>
-		<url>scm:git:git@github.com:ressec/demeter.git</url>
-		<connection>scm:git:git@github.com:ressec/demeter.git</connection>
-		<developerConnection>scm:git:git@github.com:ressec/demeter.git</developerConnection>
-	</scm>
-	<organization>
-		<name>Heliosphere</name>
-	</organization>
-	<inceptionYear>2016</inceptionYear>
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/ressec/demeter/issues</url>
-	</issueManagement>
-	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/ressec/demeter</url>
-	</ciManagement>
-
+	<distributionManagement>
+	
+		<!-- Publish the releases here -->
+		<repository>
+			<id>nexus-releases</id>
+			<name>nexus-releases</name>
+			<url>http://83.153.27.91:9086/nexus/content/repositories/releases/</url>
+		</repository>
+		
+		<!-- Publish the snapshots here -->
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>nexus-snapshots</name>
+			<url>http://83.153.27.91:9086/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		
+	</distributionManagement>
 </project>
