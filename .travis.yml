@@ -45,7 +45,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: "969e6b065c656d24e55c9661337254c03a427332"
-#    secure: XyLxQcS14znfXS6Lylf2YrPkqpCOi13xHLLGB0yhGn5uoqfzbel0gvD/5mhCz12yOnsGZSJIP91WkJM6enjgto+FPYP994Pjvuuqn2hrMFqPDpEcdclB5es6TvJQd2wPj4FzkiBxEeootujF8I7jiMCoLJSl9Xp4peQbsM8s/jo=
+    secure: XyLxQcS14znfXS6Lylf2YrPkqpCOi13xHLLGB0yhGn5uoqfzbel0gvD/5mhCz12yOnsGZSJIP91WkJM6enjgto+FPYP994Pjvuuqn2hrMFqPDpEcdclB5es6TvJQd2wPj4FzkiBxEeootujF8I7jiMCoLJSl9Xp4peQbsM8s/jo=
   file: ${TRAVIS_TAG}.zip
   on:
     repo: ressec/demeter
