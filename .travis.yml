@@ -33,11 +33,11 @@ script:
 jdk:
   oraclejdk7
 
-deploy:
+#deploy:
 #  provider: releases
 #  api_key: "969e6b065c656d24e55c9661337254c03a427332"
 #  file: 
-  skip_cleanup: true
+#  skip_cleanup: true
 #  on:
 #    tags: true
     
