@@ -46,7 +46,7 @@ deploy:
 #    - travis
     
 after_success:
-  - "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && mvn deploy -DskipTests --settings etc/deploy-settings.xml"
+  - "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && mvn deploy -DskipTests --settings /target/classes/etc/deploy-settings.xml"
       
 #env:
 #  global:
