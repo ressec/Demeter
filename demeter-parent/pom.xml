@@ -1,19 +1,251 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.heliosphere.demeter</groupId>
-  <artifactId>demeter-parent</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>Heliosphere's Demeter project.</name>
-  <modules>
-  	<module>../demeter-base</module>
-  </modules>
-  <dependencies>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.12</version>
-  		<scope>test</scope>
-  	</dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.heliosphere.demeter</groupId>
+	<artifactId>demeter-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Heliosphere's Demeter project.</name>
+
+	<modules>
+		<module>../demeter-base</module>
+	</modules>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.jutzig</groupId>
+			<artifactId>github-release-plugin</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+
+		<pluginManagement>
+
+			<plugins>
+
+				<!-- COMPILATION -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+
+				<!-- SOURCES -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- JAVADOC -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.3</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+							<configuration>
+								<show>private</show>
+								<quiet>true</quiet>
+								<failOnError>false</failOnError>
+								<additionalparam>-Xdoclint:none</additionalparam>
+							</configuration>
+						</execution>
+						<execution>
+							<id>aggregate</id>
+							<phase>site</phase>
+							<goals>
+								<goal>aggregate</goal>
+							</goals>
+							<configuration>
+								<show>private</show>
+								<quiet>true</quiet>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- SITE -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<failOnError>false</failOnError>
+						<additionalparam>-Xdoclint:none</additionalparam>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>site</goal>
+							</goals>
+							<phase>deploy</phase>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- SUREFIRE -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.10</version>
+				</plugin>
+
+				<!-- JAR: Create a jar of the test classes. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>jar</goal>
+								<goal>test-jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- NATIVEDEPENDENCIES: Unpack every dependency with a classifier beginning with 'natives-'. -->
+				<plugin>
+					<groupId>com.googlecode.mavennatives</groupId>
+					<artifactId>maven-nativedependencies-plugin</artifactId>
+					<version>0.0.7</version>
+					<executions>
+						<execution>
+							<id>unpacknatives</id>
+							<goals>
+								<goal>copy</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<nativesTargetDir>target/natives</nativesTargetDir>
+						<separateDirs>true</separateDirs>
+					</configuration>
+				</plugin>
+
+				<!-- RELEASE: This plugin is used to release a project with Maven. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+				</plugin>
+
+				<plugin>
+					<groupId>de.jutzig</groupId>
+					<artifactId>github-release-plugin</artifactId>
+					<version>1.1.1</version>
+					<configuration>
+						<description>Description of your release</description>
+						<releaseName>1.0 Final</releaseName>
+						<tag>${project.version}</tag>
+
+						<!-- If your project has additional artifacts, such as ones produced by the maven-assembly-plugin, you can define the 
+							following (requires version 1.1.1 of the plugin or higher): -->
+						<fileSets>
+							<fileSet>
+								<directory>${project.build.directory}</directory>
+								<includes>
+									<include>${project.artifactId}*.tar.gz</include>
+									<include>${project.artifactId}*.zip</include>
+								</includes>
+							</fileSet>
+						</fileSets>
+					</configuration>
+				</plugin>
+
+			</plugins>
+
+		</pluginManagement>
+
+	</build>
+
+	<repositories>
+		<repository>
+			<id>ressec-snapshots</id>
+			<url>https://raw.github.com/ressec/mvn-repo/master/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>ressec-releases</id>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+			<url>https://raw.github.com/ressec/mvn-repo/master/releases</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+
+	</pluginRepositories>
+
+	<properties>
+		<github.global.server>github</github.global.server>
+	</properties>
+
+	<scm>
+		<url>scm:git:git@github.com:ressec/demeter.git</url>
+		<connection>scm:git:git@github.com:ressec/demeter.git</connection>
+		<developerConnection>scm:git:git@github.com:ressec/demeter.git</developerConnection>
+	</scm>
+	<organization>
+		<name>Heliosphere</name>
+	</organization>
+	<inceptionYear>2016</inceptionYear>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/ressec/demeter/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/ressec/demeter</url>
+	</ciManagement>
+
 </project>

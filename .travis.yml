@@ -15,7 +15,8 @@
 # * Uses site:stage to collect the documentation for multi-module projects.
 # * Publishes the documentation for `master` branch.
 
-language: java
+language: 
+  java
 
 variables:
   # This will supress any download for dependencies and plugins or upload messages which would clutter the console log.
@@ -25,6 +26,48 @@ variables:
   # when running from the command line.
   # `installAtEnd` and `deployAtEnd`are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true -f demeter-parent/pom.xml"
-  
+
 script: 
-  mvn test -f demeter-parent/pom.xml
+  mvn clean install deploy -f demeter-parent/pom.xml
+
+jdk:
+  oraclejdk7
+
+#deploy:
+#  provider: releases
+#  api_key: "969e6b065c656d24e55c9661337254c03a427332"
+#  file: 
+#    - demeter-parent.pom
+#    - demeter-base.jar
+#  skip_cleanup: true
+#  on:
+#    tags: true
+    
+before_deploy:
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=$TRAVIS_BRANCH-v0.1.$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push -q https://969e6b065c656d24e55c9661337254c03a427332@github.com/ressec/demeter --tags
+
+#deploy:
+#  skip_cleanup: true
+#  provider: releases
+#  api_key:
+#    secure: "v3L3s8fJF+kaVv3ke/7n2wM+QI4EhLmoEAX6WRNkVTmOgS9LUkvrdSe3WSiyO3sgqPf2NnkJevn8bfNpvudX/peq02xY2Ow1ZlN4bzQi0e/5WbN0rmpjiQY2ppztbu03VdH4JS8l6k2hREex1m/7PQBLLniVXN76OkxQlJoM8Mx6TtzYPgshYrMNlaCowKhHdRpaXtmtos1Fk9taZVAQydUMdOuPi2H34iWPX6wLbjOKGMDGqsI0ySU5MAIVKMWEp96hk2JtrGGu5fw87Wf9HoKbpzBxd4cCrrjUvs5uz64w08PAhrFt5YNOZwW1XzsXEV0LG4y8e201SbnUsC8IbZq4UPtXGir0f3oPQXuk9O50bGImmuTbikbGoyxoTfwmSq4xpuwtT6f+h9h4fjjCZ2QAfNJ+79VvPkLbBEJ96ksbQ4kRDhYzmCEZhse6X4U0mjnzxU932MVNTlDoZNiPrd4tY95Sqvc+tWYBo1lzIIqYPEX9bGJSa+oEyZ7wHldhzHO9yYTFMF+tKWuDjnXysVmkOg0q9JnGE5davfeITGbuguwJz7OVoaHrY2HJ2b2gGp3xQgGupDl0F8eU+/S9fzARShAAIOm9nV7xezXVe6evEfevoYPAS3c+PYBoOmYyzSvSt/x7tZeMCX/ffPJ5aPAGf9BngTbm1pOhWew6AKY="
+#  file:
+#    - "demeter-parent.pom"
+#    - "demeter-base.jar"
+#  on:
+#    tags: false
+#    all_branches: true
+
+branches:
+  except:
+    - travis
+  
+env:
+  global:
+    - secure: "y/3TII//hOkLHrMZNCUB67cTCQ4YH4m4EoAtlOjI5Vq8h4ygi/UgX1aInl5b+CNhXLsI2wKgUzTLpEpx+lhhJNygEJJvQWjD4Lf61VszPfZPBXSK+2NfXE0fnus4BTtlDuf9YZxGV1S/mfLu44aBEuujbphbnVupP8KBTioMSg7pmxrXkhIKAc+tfNh7U7d6UI12uDCWUpGU2rB3B1u7cbQWJbWhWdYiTFU+3vO/WMFz6VDLfONVcgx1yMw3MIE3ruAOnD6yc2EP5GTChcCkE+zxp4m5k24DBpL8oS9AncrbOlqmTkTN25KdjSHYeiniVZU//IsWEaEUNWa/lbVqls4PgsJzK/VrTMNcF06blp1uqf+EateS3civ6V5LMGcT4DIYZCbRvI7vDBJ8b9TFb06taQrKKTjkNxxjNn8i7HUQnITYRZ5bH7bONKWUDnj21bqe0l/pAhnCt8l4FKVqG+3u+ySJNHb47H2LnSsuCCK7Pn32nSmt8zoaPyWvjTZWO1vvxoILbYNxEbWfY/vQbjo7J/ZfeTBA4HZkmQRs12hLdKlkHzV+xUK1xvkYLfhGCSIH+2nBaH93UcyJnZExxJbrQ3SzcXWR4V20JJr38W3GwNRTO5/IdP2rU7v/CcCX53bqOHzQ66DnFqU9ePNH2txxI7PD5LsubHRFaklfiUQ="
+    - secure: "xO1no/sMyxGJRGYG6yIBW81TZjj9I05t/SUzasPCpk8DOiarnEmyGWMxbIvjQKOWG7YaCP4CdMdXKqIugGXi9B6f6+l+aEYIzq3WwKA7mPV64YIqaxuppVPn+3KvUdm1CdVMmeSAQvShjIFBMrhnb+7zyMGbExksisCIUAk2mhns4jaTMa0KELjSVqeehJxzAc/LcaapKazP4fuhs1LimeHFx+twCrBaMdMdX3D6OiN1FjwBNbtlt0ZsRww18mKCNf8eOxnYOr6e6oNuGZOwOqyB5D+eluFustvuTo5LnCW9BsGplYoyGRDntzzwTF7U6Ldt8dEg9XNxSh8PI7CImqSGuWMuaojODhUMzPANM/5LybE3FqcENvJ9MvscVW7xnOZ1Km78WWeyu7iwJUvJzRHKF2E0cvLgYywOOFUXfVieQTonE/wz1psoFB7vzUHpJZmKedcEomizFt8td+sRr56J84mIA9NNhNPD8hHta6fnV869VfvGWj9ZgxyV9gTr4Azjku53Dq+FZqFS1YhdVEnayH+x1D34BMSC/gKusN9VcCRCqEI3ws+oh43RmdCXZHUn/anYAt72xawAvy47huVi4pmMG3gCd+09BwuBsP4CSTjgayGOOMiTRGJY+aqWk92M1TEDB5IEzy2tfkoJAhKRGQ2VkPTByZ0/hCPTdmI="
+    
