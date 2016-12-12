@@ -38,7 +38,7 @@ jdk:
     
 after_success:
   - echo "<settings><servers><server><id>nexus-snapshots</id><username>\${env.CLI_DEPLOY_USERNAME}</username><password>\${env.CLI_DEPLOY_PASSWORD}</password></server></servers></settings>" > ~/settings.xml
-  - if [ -z ${TRAVIS_TAG} ]; then mvn deploy -DskipTests --settings ~/settings.xml; fi
+  - if [ -z ${TRAVIS_TAG} ]; then mvn deploy -f demeter-parent/pom.xml -DskipTests --settings ~/settings.xml; fi
 
 before_deploy:
   - mvn package
