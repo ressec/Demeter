@@ -30,15 +30,15 @@ language:
   # `installAtEnd` and `deployAtEnd`are only effective with recent version of the corresponding plugins.
   #MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true -f demeter-parent/pom.xml"
 
-#script: 
-#  mvn clean package -f demeter-parent/pom.xml
+script: 
+  mvn clean package -f demeter-parent/pom.xml
 
 jdk:
   oraclejdk7
     
 after_success:
-  - echo "<settings><servers><server><id>nexus-snapshots</id><username>\${CLI_DEPLOY_USERNAME}</username><password>\${CLI_DEPLOY_PASSWORD}</password></server></servers></settings>" > ~/settings.xml
-  - if [ -z ${TRAVIS_TAG} ]; then mvn deploy -DskipTests --settings ~/settings.xml; fi
+  - echo "<settings><servers><server><id>nexus-snapshots</id><username>\${env.CI_DEPLOY_USERNAME}</username><password>\${env.CI_DEPLOY_PASSWORD}</password></server></servers></settings>" > ~/settings.xml
+  - if [ -z ${TRAVIS_TAG} ]; then mvn deploy -f demeter-parent/pom.xml -DskipTests --settings ~/settings.xml; fi
 
 before_deploy:
   - mvn package
