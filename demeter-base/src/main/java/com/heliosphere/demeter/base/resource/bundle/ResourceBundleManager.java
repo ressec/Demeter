@@ -333,6 +333,7 @@ public final class ResourceBundleManager
 	 * @throws ResourceBundleException Thrown if an error occurred while trying
 	 * to register a resource bundle.
 	 */
+	@SuppressWarnings("nls")
 	private static final void register(final Class<? extends IBundle> bundleClass, final ResourceBundle bundle)
 	{
 		ResourceBundle previous = null;
@@ -346,7 +347,13 @@ public final class ResourceBundleManager
 
 				setInitialized(true);
 
-				log.debug(getMessage(BundleDemeterBase.ResourceBundleRegistered, bundleClass.getSimpleName(), locale.toString(), Integer.valueOf(bundle.keySet().size())));
+				String filename = bundleClass.getEnumConstants()[0].getKey() + "_" + locale.toString() + ".properties";
+				int index = filename.indexOf(".");
+				if (index > -1)
+				{
+					filename = filename.substring(index + 1, filename.length());
+				}
+				log.debug(getMessage(BundleDemeterBase.ResourceBundleRegistered, bundleClass.getSimpleName(), locale.toString(), Integer.valueOf(bundle.keySet().size()), filename));
 			}
 			else
 			{
