@@ -118,6 +118,11 @@ public abstract class AbstractResource implements IResource
 			}
 		}
 
+		if (file == null)
+		{
+			return false;
+		}
+
 		return this.file.exists();
 	}
 }
