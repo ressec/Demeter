@@ -427,13 +427,13 @@ public enum BundleDemeterBase implements IBundle
 	CommandDoesNotMatchRegularExpression("command.doesNotMatchRegularExpression"),
 
 	/**
-	 * Command alias is already registered with another command.
+	 * The command alias is already registered with another command.
 	 * <p>
 	 * <b>Key:</b><br>
-	 * {@code Command.AliasAlreadyRegistered}
+	 * Command.AliasAlreadyRegistered
 	 * <p>
 	 * <b>Message:</b><br>
-	 * {@code Command alias [command.alias= 0}, command.name={1}] is already registered with another command}
+	 * Command alias is already registered [command.alias={0}, command.name={1}]
 	 */
 	CommandAliasAlreadyRegistered("command.aliasAlreadyRegistered"),
 
