@@ -59,7 +59,6 @@ public class ResourceTest
 	 * <p>
 	 * @throws Exception In case an error occurs during the setup phase.
 	 */
-	@SuppressWarnings("static-method")
 	@Before
 	public final void setUp() throws Exception
 	{

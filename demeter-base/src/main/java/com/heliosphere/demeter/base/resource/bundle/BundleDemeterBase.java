@@ -29,7 +29,7 @@ public enum BundleDemeterBase implements IBundle
 	 * Bundle file name.
 	 * <p>
 	 * This enumerated value should always be created and must point to the name of the resource bundle so that the {@link ResourceBundleManager} can
-	 * load and register and load the resource bundle file of the {@link BundleBase} class.
+	 * load and register and load the resource bundle file of the {@link BundleDemeterBase} class.
 	 * <p>
 	 * <b>Example</b>:<br>
 	 * If the module's name is {@code foo.module}, then this enumerated value should have the value: {@code bundle.foo.module}
@@ -56,7 +56,7 @@ public enum BundleDemeterBase implements IBundle
 	 */
 
 	/**
-	 * A dummy message from component: drake-base.
+	 * A dummy message from component: demeter-base.
 	 */
 	TestDummy("test.dummy"),
 
