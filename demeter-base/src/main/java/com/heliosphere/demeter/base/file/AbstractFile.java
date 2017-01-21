@@ -9,9 +9,13 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.resource;
+package com.heliosphere.demeter.base.file;
 
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.heliosphere.demeter.base.resource.IFile;
+import com.heliosphere.demeter.base.resource.IResource;
+import com.heliosphere.demeter.base.resource.Resource;
+
+import lombok.NonNull;
 
 /**
  * Provides an abstract implementation of a file.
@@ -19,27 +23,24 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class AbstractFile implements IFile
+public abstract class AbstractFile implements IFile
 {
 	/**
 	 * Default serialization identifier.
 	 */
-	@XStreamOmitField
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Resource representing this file.
+	 * Underlying resource representing the physical file.
 	 */
-	@XStreamOmitField
-	private IResource resource;
+	IResource resource;
 
 	/**
 	 * Creates a new abstract file.
 	 * <hr>
-	 * @param pathname File pathname.
-	 * @throws ResourceException Thrown to indicate an error occurred when trying to access a resource.
+	 * @param pathname File path name.
 	 */
-	public AbstractFile(String pathname) throws ResourceException
+	public AbstractFile(final @NonNull String pathname)
 	{
 		resource = new Resource(pathname);
 	}
@@ -49,4 +50,5 @@ public class AbstractFile implements IFile
 	{
 		return resource;
 	}
+
 }

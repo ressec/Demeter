@@ -12,7 +12,11 @@
 package com.heliosphere.demeter.base.resource;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * Provides an abstract implementation of a resource.
@@ -36,6 +40,7 @@ public abstract class AbstractResource implements IResource
 	 * Creates a new abstract resource given a pathname.
 	 * <hr>
 	 * @param pathname Resource pathname.
+	 * @throws ResourceException Thrown in case an error occurred while trying to access the resource.
 	 */
 	@SuppressWarnings("nls")
 	public AbstractResource(String pathname) throws ResourceException
@@ -64,9 +69,21 @@ public abstract class AbstractResource implements IResource
 	 * @param pathname Resource path name.
 	 * @return {@code True} if the resource can be loaded, {@code false} otherwise.
 	 */
+	@SuppressWarnings("unused")
 	private final boolean loadAbsolute(String pathname)
 	{
 		this.file = new File(pathname);
+		if (!file.exists())
+		{
+			try
+			{
+				file.createNewFile();
+			}
+			catch (IOException ioe)
+			{
+				return false;
+			}
+		}
 
 		return this.file.exists();
 	}
@@ -77,18 +94,65 @@ public abstract class AbstractResource implements IResource
 	 * @param pathname Resource path name.
 	 * @return {@code True} if the resource can be loaded, {@code false} otherwise.
 	 */
+	@SuppressWarnings("unused")
 	private final boolean loadRelative(String pathname)
 	{
-		// Maybe the file pathname is relative.
-		URL url = Thread.currentThread().getContextClassLoader().getResource(pathname);
+		URL url = null;
 
 		try
 		{
+			// Maybe the file pathname is relative.
+			url = Thread.currentThread().getContextClassLoader().getResource(pathname);
+
 			this.file = new File(url.toURI());
+			if (!file.exists())
+			{
+				try
+				{
+					file.createNewFile();
+				}
+				catch (IOException ioe)
+				{
+					return false;
+				}
+			}
 		}
 		catch (Exception e)
 		{
-			return false;
+			// Try to get the parent directory of the file ... maybe the file does not exist!
+			file = new File(pathname);
+			String name = FilenameUtils.getName(pathname);
+			File directory = file.getParentFile();
+			try
+			{
+				url = Thread.currentThread().getContextClassLoader().getResource(file.getParent());
+
+				try
+				{
+					file = new File(url.toURI());
+					if (directory.exists() && directory.isDirectory())
+					{
+						// OK, found the parent directory, then create the file as it does not exist.
+						file = new File(directory.getAbsolutePath() + File.separator + name);
+						try
+						{
+							file.createNewFile();
+						}
+						catch (IOException e1)
+						{
+							return false;
+						}
+					}
+				}
+				catch (URISyntaxException urie)
+				{
+					return false;
+				}
+			}
+			catch (Exception e2)
+			{
+				return false;
+			}
 		}
 
 		return this.file.exists();
@@ -100,21 +164,67 @@ public abstract class AbstractResource implements IResource
 	 * @param pathname Resource path name.
 	 * @return {@code True} if the resource can be loaded, {@code false} otherwise.
 	 */
-	@SuppressWarnings("nls")
+	@SuppressWarnings({ "nls", "unused" })
 	private final boolean loadRelativeSeparator(String pathname)
 	{
+		URL url = null;
+
 		// Try to remove the leading file separator, if one exist.
 		if (pathname.startsWith(File.separator))
 		{
 			try
 			{
 				// Maybe the file pathname is relative.
-				URL url = Thread.currentThread().getContextClassLoader().getResource(pathname.replaceFirst(File.separator, ""));
+				url = Thread.currentThread().getContextClassLoader().getResource(pathname.replaceFirst(File.separator, ""));
 				this.file = new File(url.toURI());
+				if (!file.exists())
+				{
+					try
+					{
+						file.createNewFile();
+					}
+					catch (IOException ioe)
+					{
+						return false;
+					}
+				}
 			}
 			catch (Exception e)
 			{
-				return false;
+				// Try to get the parent directory of the file ... maybe the file does not exist!
+				file = new File(pathname);
+				String name = FilenameUtils.getName(pathname);
+				File directory = file.getParentFile();
+				try
+				{
+					url = Thread.currentThread().getContextClassLoader().getResource(file.getParent().replaceFirst(File.separator, ""));
+
+					try
+					{
+						directory = new File(url.toURI());
+						if (directory.getAbsoluteFile().exists() && directory.getAbsoluteFile().isDirectory())
+						{
+							// OK, found the parent directory, then create the file as it does not exist.
+							file = new File(directory.getAbsolutePath() + File.separator + name);
+							try
+							{
+								file.createNewFile();
+							}
+							catch (IOException e1)
+							{
+								return false;
+							}
+						}
+					}
+					catch (URISyntaxException urie)
+					{
+						return false;
+					}
+				}
+				catch (Exception e2)
+				{
+					return false;
+				}
 			}
 		}
 
