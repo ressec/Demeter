@@ -11,9 +11,7 @@
  */
 package com.heliosphere.demeter.base.file.xml;
 
-import java.util.ArrayList;
-
-import com.heliosphere.demeter.base.file.model.FileContent;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import lombok.NonNull;
 
@@ -26,8 +24,14 @@ import lombok.NonNull;
  * @param <C> - Content element type.
  * @param <F> - Footer element type.
  */
+@XStreamAlias("file")
 public class XmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 {
+	/**
+	 * Default serialization identifier.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates a new XML file.
 	 * <hr>
@@ -38,13 +42,14 @@ public class XmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 		super(pathname);
 	}
 
+	@SuppressWarnings("nls")
 	@Override
 	public void setAliases()
 	{
 		super.setAliases();
 
-		getEngine().alias("header", getHeader().getClass());
-		getEngine().alias("data", FileContent.class, ArrayList.class);
-		getEngine().alias("footer", getFooter().getClass());
+		//getEngine().alias("object", Content.class, Content.class);
+		//getEngine().alias("tata", Header.class);
+		//getEngine().alias("footer", Footer.class, Object.class);
 	}
 }

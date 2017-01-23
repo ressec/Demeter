@@ -11,11 +11,19 @@
  */
 package com.heliosphere.demeter.base.file.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
 import lombok.Getter;
 import lombok.Setter;
 
+@XStreamAlias("object")
 public class Content
 {
+	@XStreamAsAttribute
+	@XStreamAlias("class")
+	private final String className = Content.class.getName();
+
 	@Getter
 	@Setter
 	private String value;
