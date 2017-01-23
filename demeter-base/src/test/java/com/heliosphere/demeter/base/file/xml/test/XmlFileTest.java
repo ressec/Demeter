@@ -20,10 +20,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.heliosphere.demeter.base.file.model.Content;
-import com.heliosphere.demeter.base.file.model.Footer;
-import com.heliosphere.demeter.base.file.model.Header;
 import com.heliosphere.demeter.base.file.xml.XmlFile;
+import com.heliosphere.demeter.base.file.xml.model.Content;
+import com.heliosphere.demeter.base.file.xml.model.Footer;
+import com.heliosphere.demeter.base.file.xml.model.Header;
 
 /**
  * Test class for the {@link XmlFile} class.
