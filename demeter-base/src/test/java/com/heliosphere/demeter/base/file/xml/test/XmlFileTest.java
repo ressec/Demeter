@@ -99,8 +99,6 @@ public class XmlFileTest
 			Content content = new Content();
 			content.setValue("toto");
 
-			file.getEngine().alias("content", Content.class);
-
 			file.setHeader(header);
 			file.addContent(content);
 			file.setFooter(footer);

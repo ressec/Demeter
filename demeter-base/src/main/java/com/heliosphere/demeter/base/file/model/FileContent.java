@@ -16,12 +16,14 @@ import java.util.Collections;
 import java.util.List;
 
 import com.heliosphere.demeter.base.file.IFileContent;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 public class FileContent<C> implements IFileContent<C>
 {
 	/**
 	 * File content.
 	 */
+	@XStreamAlias("objects")
 	private List<C> content = new ArrayList<>();
 
 	@Override
