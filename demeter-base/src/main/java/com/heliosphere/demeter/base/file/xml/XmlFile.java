@@ -48,6 +48,7 @@ public class XmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	{
 		super.setAliases();
 
+		getEngine().alias("file", XmlFile.class);
 		//getEngine().alias("object", Content.class, Content.class);
 		//getEngine().alias("tata", Header.class);
 		//getEngine().alias("footer", Footer.class, Object.class);

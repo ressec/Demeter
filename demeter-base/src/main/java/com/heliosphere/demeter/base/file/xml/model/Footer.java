@@ -9,11 +9,17 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.model;
+package com.heliosphere.demeter.base.file.xml.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents the element that is composing the xml file footer part.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
 public class Footer
 {
 	@Getter

@@ -13,9 +13,9 @@ package com.heliosphere.demeter.base.file;
 
 import java.util.List;
 
-import com.heliosphere.demeter.base.file.model.FileContent;
-import com.heliosphere.demeter.base.file.model.FileFooter;
-import com.heliosphere.demeter.base.file.model.FileHeader;
+import com.heliosphere.demeter.base.file.xml.model.base.FileContent;
+import com.heliosphere.demeter.base.file.xml.model.base.FileFooter;
+import com.heliosphere.demeter.base.file.xml.model.base.FileHeader;
 import com.heliosphere.demeter.base.resource.AbstractFile;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -68,9 +68,6 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	}
 
 	@Override
-	public abstract void load() throws FileException;
-
-	@Override
 	public abstract void save() throws FileException;
 
 	@Override
@@ -99,6 +96,11 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	@Override
 	public final void setContent(List<C> content)
 	{
+		if (this.content == null)
+		{
+			this.content = new FileContent<>();
+		}
+
 		this.content.set(content);
 	}
 

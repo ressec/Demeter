@@ -13,6 +13,7 @@ package com.heliosphere.demeter.base.file.xml;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import com.heliosphere.demeter.base.file.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.FileException;
@@ -31,7 +32,7 @@ import lombok.Getter;
  * @param 	<C> Record type of the content.
  * @param 	<F> Record type of the footer.
  */
-public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H, C, F> implements IXmlFile
+public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H, C, F> implements IXmlFile<H, C, F>
 {
 	/**
 	 * Default serialization identifier.
@@ -62,10 +63,24 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 		engine.autodetectAnnotations(true);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void load() throws FileException
 	{
-		// TODO Auto-generated method stub
+		setAliases();
+
+		try
+		{
+			IXmlFile<?, ?, ?> holder = (IXmlFile<H, C, F>) engine.fromXML(getResource().getFile());
+			setHeader((H) holder.getHeader());
+			setFooter((F) holder.getFooter());
+			setContent((List<C>) holder.getContent());
+		}
+		catch (XStreamException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

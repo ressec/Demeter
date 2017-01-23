@@ -9,17 +9,28 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.model;
+package com.heliosphere.demeter.base.file.xml.model.base;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.heliosphere.demeter.base.file.IFileContent;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * Represents the file content part of an xml file.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ * @param <C> - Element type composing the file content list (of elements).
+ */
 public class FileContent<C> implements IFileContent<C>
 {
+	/**
+	 * Default serialization identifier.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * File content.
 	 */
@@ -35,7 +46,8 @@ public class FileContent<C> implements IFileContent<C>
 	@Override
 	public void set(List<C> content)
 	{
-		Collections.copy(this.content, content);
+		this.content = content;
+		//		Collections.copy(this.content, content);
 	}
 
 	@Override

@@ -9,14 +9,26 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.model;
+package com.heliosphere.demeter.base.file.xml.model.base;
 
 import com.heliosphere.demeter.base.file.IFileHeader;
 
 import lombok.NonNull;
 
+/**
+ * Represents the file header part of an xml file.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ * @param <H> - Element type embedded in the file header.
+ */
 public class FileHeader<H> implements IFileHeader<H>
 {
+	/**
+	 * Default serialization identifier. 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * File header.
 	 */
