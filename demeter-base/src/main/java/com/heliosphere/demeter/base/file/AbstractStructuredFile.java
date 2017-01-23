@@ -68,9 +68,6 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	}
 
 	@Override
-	public abstract void load() throws FileException;
-
-	@Override
 	public abstract void save() throws FileException;
 
 	@Override
@@ -99,6 +96,11 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	@Override
 	public final void setContent(List<C> content)
 	{
+		if (this.content == null)
+		{
+			this.content = new FileContent<>();
+		}
+
 		this.content.set(content);
 	}
 

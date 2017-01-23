@@ -15,8 +15,20 @@ import com.heliosphere.demeter.base.file.IFileHeader;
 
 import lombok.NonNull;
 
+/**
+ * Represents the file header part of an xml file.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ * @param <H> - Element type embedded in the file header.
+ */
 public class FileHeader<H> implements IFileHeader<H>
 {
+	/**
+	 * Default serialization identifier. 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * File header.
 	 */

@@ -14,6 +14,12 @@ package com.heliosphere.demeter.base.file.model;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents the element that is composing the xml file header part.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
 public class Header
 {
 	@Getter

@@ -11,9 +11,10 @@
  */
 package com.heliosphere.demeter.base.file.xml;
 
+import com.heliosphere.demeter.base.file.IStructuredFile;
 import com.thoughtworks.xstream.XStream;
 
-public interface IXmlFile
+public interface IXmlFile<H, C, F> extends IStructuredFile<H, C, F>
 {
 	void setAliases();
 
