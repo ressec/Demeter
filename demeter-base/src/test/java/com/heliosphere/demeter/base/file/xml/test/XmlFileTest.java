@@ -96,7 +96,7 @@ public class XmlFileTest
 			file.setHeader(header);
 
 			Footer footer = new Footer();
-			footer.setGenerated("on 2017/01/20 @ 16:57:05");
+			footer.setGenerated("on 2017/01/20 @ 16:59:05");
 			file.setFooter(footer);
 
 			file.addContent(new Content("toto"));
