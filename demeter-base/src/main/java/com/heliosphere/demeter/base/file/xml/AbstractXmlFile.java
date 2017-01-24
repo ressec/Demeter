@@ -78,8 +78,7 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 		}
 		catch (XStreamException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new FileException(e);
 		}
 	}
 

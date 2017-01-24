@@ -99,10 +99,10 @@ public class XmlFileTest
 			footer.setGenerated("on 2017/01/20 @ 16:59:05");
 			file.setFooter(footer);
 
-			file.addContent(new Content("toto"));
-			file.addContent(new Content("tata"));
-			file.addContent(new Content("titi"));
-			file.addContent(new Content("tutu"));
+			file.addContent(new Content("Washington"));
+			file.addContent(new Content("Paris"));
+			file.addContent(new Content("London"));
+			file.addContent(new Content("Singapore"));
 
 			file.save();
 
@@ -129,7 +129,7 @@ public class XmlFileTest
 			Assert.assertTrue(file != null);
 
 			Assert.assertTrue(file.getHeader().getAuthor().equals("Resse Christophe"));
-			Assert.assertTrue(file.getContent().get(0).getValue().equals("toto"));
+			Assert.assertTrue(file.getContent().get(0).getValue().equals("Washington"));
 		}
 		catch (Exception e)
 		{
