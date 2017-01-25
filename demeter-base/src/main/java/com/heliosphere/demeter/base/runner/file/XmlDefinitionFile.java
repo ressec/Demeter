@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.xml.model;
+package com.heliosphere.demeter.base.runner.file;
 
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -17,7 +17,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.NonNull;
 
 /**
- * Provides a concrete implementation of an XML file.
+ * Provides a concrete implementation of a {@code Runner} XML definition file.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
@@ -26,7 +26,7 @@ import lombok.NonNull;
  * @param <F> - Footer element type.
  */
 @XStreamAlias("file")
-public class SimpleXmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
+public class XmlDefinitionFile<H, C, F> extends AbstractXmlFile<H, C, F>
 {
 	/**
 	 * Default serialization identifier.
@@ -38,7 +38,7 @@ public class SimpleXmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	 * <hr>
 	 * @param pathname XML file path name.
 	 */
-	public SimpleXmlFile(final @NonNull String pathname)
+	public XmlDefinitionFile(final @NonNull String pathname)
 	{
 		super(pathname);
 	}
@@ -49,9 +49,6 @@ public class SimpleXmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	{
 		super.setAliases();
 
-		getEngine().alias("file", this.getClass());
-		//getEngine().alias("object", Content.class, Content.class);
-		//getEngine().alias("tata", Header.class);
-		//getEngine().alias("footer", Footer.class, Object.class);
+		getEngine().alias("xml-definition-file", this.getClass());
 	}
 }

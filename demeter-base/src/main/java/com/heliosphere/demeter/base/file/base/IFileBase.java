@@ -9,10 +9,11 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file;
+package com.heliosphere.demeter.base.file.base;
 
 import java.io.Serializable;
 
+import com.heliosphere.demeter.base.file.FileException;
 import com.heliosphere.demeter.base.resource.IResource;
 
 /**

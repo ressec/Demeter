@@ -9,9 +9,9 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.xml.model.base;
+package com.heliosphere.demeter.base.file.model;
 
-import com.heliosphere.demeter.base.file.IFileHeader;
+import com.heliosphere.demeter.base.file.base.IFileHeader;
 
 import lombok.NonNull;
 

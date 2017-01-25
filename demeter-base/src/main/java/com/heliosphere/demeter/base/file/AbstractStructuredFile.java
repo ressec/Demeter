@@ -13,9 +13,10 @@ package com.heliosphere.demeter.base.file;
 
 import java.util.List;
 
-import com.heliosphere.demeter.base.file.xml.model.base.FileContent;
-import com.heliosphere.demeter.base.file.xml.model.base.FileFooter;
-import com.heliosphere.demeter.base.file.xml.model.base.FileHeader;
+import com.heliosphere.demeter.base.file.base.IStructuredFile;
+import com.heliosphere.demeter.base.file.model.FileContent;
+import com.heliosphere.demeter.base.file.model.FileFooter;
+import com.heliosphere.demeter.base.file.model.FileHeader;
 import com.heliosphere.demeter.base.resource.AbstractFile;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;

@@ -23,15 +23,15 @@ import org.junit.Test;
 import com.heliosphere.demeter.base.file.xml.model.Content;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
-import com.heliosphere.demeter.base.file.xml.model.SimpleXmlFile;
+import com.heliosphere.demeter.base.runner.file.XmlDefinitionFile;
 
 /**
- * Test class for the {@link XmlFile} class.
+ * Test an XML definition file.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class XmlFileTest
+public class XmlDefinitionFileTest
 {
 	/**
 	 * Initialization of the test cases.
@@ -77,59 +77,56 @@ public class XmlFileTest
 		// Empty
 	}
 
+	//	/**
+	//	 * Creates a resource based on a file with an absolute path name.
+	//	 */
+	//	@SuppressWarnings({ "static-method", "nls" })
+	//	@Test
+	//	public final void createXmlFile()
+	//	{
+	//		try
+	//		{
+	//			XmlFile<Header, Content, Footer> file = new XmlFile<>("/unit/path/test/basic-xml-file.xml");
+	//
+	//			Header header = new Header();
+	//			header.setCompany("Heliosphere Ltd.");
+	//			header.setAuthor("Resse Christophe");
+	//			header.setVersion("1.0");
+	//			header.setDescription("A simple XML file using the <FileHeader> class as header, content and footer.");
+	//			file.setHeader(header);
+	//
+	//			Footer footer = new Footer();
+	//			footer.setGenerated("on 2017/01/20 @ 16:59:05");
+	//			file.setFooter(footer);
+	//
+	//			file.addContent(new Content("Washington"));
+	//			file.addContent(new Content("Paris"));
+	//			file.addContent(new Content("London"));
+	//			file.addContent(new Content("Singapore"));
+	//
+	//			file.save();
+	//
+	//			Assert.assertTrue(file != null);
+	//		}
+	//		catch (Exception e)
+	//		{
+	//			fail(e.getMessage());
+	//		}
+	//	}
+
 	/**
-	 * Creates a resource based on a file with an absolute path name.
+	 * Loads our test xml definition file.
 	 */
 	@SuppressWarnings({ "static-method", "nls" })
 	@Test
-	public final void createXmlFile()
+	public final void loadDefinitionXmlFile()
 	{
 		try
 		{
-			SimpleXmlFile<Header, Content, Footer> file = new SimpleXmlFile<>("/unit/path/test/basic-xml-file.xml");
-
-			Header header = new Header();
-			header.setCompany("Heliosphere Ltd.");
-			header.setAuthor("Resse Christophe");
-			header.setVersion("1.0");
-			header.setDescription("A simple XML file using the <FileHeader> class as header, content and footer.");
-			file.setHeader(header);
-
-			Footer footer = new Footer();
-			footer.setGenerated("on 2017/01/20 @ 16:59:05");
-			file.setFooter(footer);
-
-			file.addContent(new Content("Washington"));
-			file.addContent(new Content("Paris"));
-			file.addContent(new Content("London"));
-			file.addContent(new Content("Singapore"));
-
-			file.save();
-
-			Assert.assertTrue(file != null);
-		}
-		catch (Exception e)
-		{
-			fail(e.getMessage());
-		}
-	}
-
-	/**
-	 * Creates a resource based on a file with an absolute path name.
-	 */
-	@SuppressWarnings({ "static-method", "nls" })
-	@Test
-	public final void loadXmlFile()
-	{
-		try
-		{
-			SimpleXmlFile<Header, Content, Footer> file = new SimpleXmlFile<>("/unit/path/test/basic-xml-file.xml");
+			XmlDefinitionFile<Header, Content, Footer> file = new XmlDefinitionFile<>("/unit/path/test/test-runner-definition.xml");
 			file.load();
 
 			Assert.assertTrue(file != null);
-
-			Assert.assertTrue(file.getHeader().getAuthor().equals("Resse Christophe"));
-			Assert.assertTrue(file.getContent().get(0).getValue().equals("Washington"));
 		}
 		catch (Exception e)
 		{

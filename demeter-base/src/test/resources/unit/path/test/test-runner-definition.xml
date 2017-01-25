@@ -1,0 +1,72 @@
+<xml-definition-file>
+
+  <file-header>
+    <header class="com.heliosphere.demeter.base.file.xml.model.Header">
+      <version>1.101</version>
+      <company>Heliosphere Ltd.</company>
+      <author>Resse Christophe</author>
+      <description>A simple test xml execution file.</description>
+    </header>
+  </file-header>
+  
+  <file-content>
+    <parameters>
+      <parameter>
+        <name>section</name> <!-- WARNING: Parameter name is case sensitive! -->
+        <description>Process a specific section.</description>
+        <priority>150</priority> <!-- DEFAULT: If no priority is defined, default priority is set to 100! -->
+
+        <!-- 
+        List the aliases defined for this parameter definition. 
+        -->
+        <aliases>
+          <alias>s</alias> <!-- WARNING: Parameter alias is case sensitive! -->
+          <alias>sec</alias>  
+        </aliases>
+
+        <!-- 
+        List the allowed parameter values. 
+        -->
+        <values>
+          <value>CLOP</value> <!-- WARNING: Parameter allowed value is case sensitive! -->
+          <value>SUM</value>
+          <value>IRQ</value>
+          <value>BAL</value>
+          <value>MAIL</value>
+          <value>LAB</value>
+        </values>
+        <!-- 
+        This attribute is used to specify this parameter is a 'mandatory' parameter meaning that it must always be present in an xml execution file. 
+        INFO: If not set, 'false' is the default value! 
+        -->
+        <mandatory>true</mandatory> <!-- true | false -->
+        <!-- 
+        This attribute is used to specify that this parameter definition is 'reserved' for internal usage ONLY! 
+        It means, it should never be used in an xml execution file ; if so, it will be ignored.
+        INFO: If not set, 'false' is the default value! 
+        -->
+        <reserved>true</reserved> <!-- true | false -->
+        <!-- 
+        List of parameters that are to be considered as 'incompatible' with the current parameter definition.
+        -->
+        <excludes>
+          <exclude>process</exclude> <!-- The 'process' parameter is to be considered as incompatible with parameter 'section' -->
+          <exclude>ingest</exclude>  <!-- The 'ingest'  parameter is to be considered as incompatible with parameter 'section' -->
+        </excludes>
+        <!-- 
+        List of parameters that are to be considered as 'required' when the current parameter is used in an xml execution file.
+        -->
+        <includes>
+          <include>analyze</include> <!-- The 'analyze' parameter is to be considered as required when parameter 'section' is used in an xml execution file -->
+        </includes>
+      </parameter>
+    </parameters>
+  </file-content>
+  
+  <file-footer>
+    <footer class="com.heliosphere.demeter.base.file.xml.model.Footer">
+      <generated>on 2017/01/20 @ 16:59:05</generated>
+    </footer>
+  </file-footer>
+  
+</xml-definition-file>

@@ -9,9 +9,9 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.xml;
+package com.heliosphere.demeter.base.file.xml.base;
 
-import com.heliosphere.demeter.base.file.IStructuredFile;
+import com.heliosphere.demeter.base.file.base.IStructuredFile;
 import com.thoughtworks.xstream.XStream;
 
 public interface IXmlFile<H, C, F> extends IStructuredFile<H, C, F>
