@@ -1,0 +1,22 @@
+<xml-definition-file>
+
+  <file-header>
+    <header class="com.heliosphere.demeter.base.file.xml.model.Header">
+      <version>1.101</version>
+      <company>Heliosphere Ltd.</company>
+      <author>Resse Christophe</author>
+      <description>A simple test xml execution file.</description>
+    </header>
+  </file-header>
+  
+  <file-content>
+
+  </file-content>
+  
+  <file-footer>
+    <footer class="com.heliosphere.demeter.base.file.xml.model.Footer">
+      <generated>on 2017/01/20 @ 16:59:05</generated>
+    </footer>
+  </file-footer>
+  
+</xml-definition-file>

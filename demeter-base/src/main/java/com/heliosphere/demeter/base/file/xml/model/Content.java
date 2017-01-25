@@ -33,7 +33,7 @@ public class Content
 	 */
 	@XStreamAsAttribute
 	@XStreamAlias("class")
-	private final String className = Content.class.getName();
+	private final String className = this.getClass().getName();
 
 	/**
 	 * Value.

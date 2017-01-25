@@ -9,14 +9,14 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.xml;
+package com.heliosphere.demeter.base.file.xml.base;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.heliosphere.demeter.base.file.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.FileException;
+import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;

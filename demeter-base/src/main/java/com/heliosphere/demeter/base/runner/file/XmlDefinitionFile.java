@@ -9,21 +9,24 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file;
+package com.heliosphere.demeter.base.runner.file;
 
-import com.heliosphere.demeter.base.resource.IFile;
-import com.heliosphere.demeter.base.resource.IResource;
-import com.heliosphere.demeter.base.resource.Resource;
+import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import lombok.NonNull;
 
 /**
- * Provides an abstract implementation of a file.
+ * Provides a concrete implementation of a {@code Runner} XML definition file.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
+ * @param <H> - Header type.
+ * @param <C> - Content element type.
+ * @param <F> - Footer element type.
  */
-public abstract class AbstractFile implements IFile
+@XStreamAlias("file")
+public class XmlDefinitionFile<H, C, F> extends AbstractXmlFile<H, C, F>
 {
 	/**
 	 * Default serialization identifier.
@@ -31,24 +34,21 @@ public abstract class AbstractFile implements IFile
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Underlying resource representing the physical file.
-	 */
-	IResource resource;
-
-	/**
-	 * Creates a new abstract file.
+	 * Creates a new XML file.
 	 * <hr>
-	 * @param pathname File path name.
+	 * @param pathname XML file path name.
 	 */
-	public AbstractFile(final @NonNull String pathname)
+	public XmlDefinitionFile(final @NonNull String pathname)
 	{
-		resource = new Resource(pathname);
+		super(pathname);
 	}
 
+	@SuppressWarnings("nls")
 	@Override
-	public final IResource getResource()
+	public void setAliases()
 	{
-		return resource;
-	}
+		super.setAliases();
 
+		getEngine().alias("xml-definition-file", this.getClass());
+	}
 }

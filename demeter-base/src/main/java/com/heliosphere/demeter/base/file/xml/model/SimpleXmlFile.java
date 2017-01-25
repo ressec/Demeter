@@ -9,8 +9,9 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.xml;
+package com.heliosphere.demeter.base.file.xml.model;
 
+import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import lombok.NonNull;
@@ -25,7 +26,7 @@ import lombok.NonNull;
  * @param <F> - Footer element type.
  */
 @XStreamAlias("file")
-public class XmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
+public class SimpleXmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 {
 	/**
 	 * Default serialization identifier.
@@ -37,7 +38,7 @@ public class XmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	 * <hr>
 	 * @param pathname XML file path name.
 	 */
-	public XmlFile(final @NonNull String pathname)
+	public SimpleXmlFile(final @NonNull String pathname)
 	{
 		super(pathname);
 	}
@@ -48,7 +49,7 @@ public class XmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	{
 		super.setAliases();
 
-		getEngine().alias("file", XmlFile.class);
+		getEngine().alias("file", this.getClass());
 		//getEngine().alias("object", Content.class, Content.class);
 		//getEngine().alias("tata", Header.class);
 		//getEngine().alias("footer", Footer.class, Object.class);

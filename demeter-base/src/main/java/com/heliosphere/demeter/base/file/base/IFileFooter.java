@@ -9,30 +9,30 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file;
+package com.heliosphere.demeter.base.file.base;
 
 import java.io.Serializable;
 
 /**
- * Interface defining the behavior of the header of a structured file.
+ * Interface defining the behavior of the footer of a structured file.
  * <hr>
  * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param 	<H> Type of the record constituting the header of the file.
+ * @param 	<F> Type of the record constituting the footer of the file.
  */
-public interface IFileHeader<H> extends Serializable
+public interface IFileFooter<F> extends Serializable
 {
 	/**
-	 * Returns the header of the file.
+	 * Returns the footer of the file.
 	 * <hr>
-	 * @return Header.
+	 * @return File footer.
 	 */
-	H get();
+	F get();
 
 	/**
-	 * Sets the header of the file.
+	 * Sets the footer of the file.
 	 * <hr>
-	 * @param header File header.
+	 * @param footer File footer.
 	 */
-	void set(H header);
+	void set(F footer);
 }

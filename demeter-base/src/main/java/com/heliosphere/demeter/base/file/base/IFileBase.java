@@ -9,30 +9,39 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file;
+package com.heliosphere.demeter.base.file.base;
 
 import java.io.Serializable;
 
+import com.heliosphere.demeter.base.file.FileException;
+import com.heliosphere.demeter.base.resource.IResource;
+
 /**
- * Interface defining the behavior of the footer of a structured file.
+ * Interface defining the behavior of a very basic {@code file}.
  * <hr>
  * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param 	<F> Type of the record constituting the footer of the file.
  */
-public interface IFileFooter<F> extends Serializable
+public interface IFileBase extends Serializable
 {
 	/**
-	 * Returns the footer of the file.
+	 * Returns the underlying resource representing the physical file.
 	 * <hr>
-	 * @return File footer.
+	 * @return File resource.
 	 */
-	F get();
+	IResource getResource();
 
 	/**
-	 * Sets the footer of the file.
+	 * Loads the file.
 	 * <hr>
-	 * @param footer File footer.
+	 * @throws FileException Thrown to indicate an error occurred while trying to load the file.
 	 */
-	void set(F footer);
+	void load() throws FileException;
+
+	/**
+	 * Saves the file.
+	 * <hr>
+	 * @throws FileException Thrown to indicate an error occurred while trying to save the file.
+	 */
+	void save() throws FileException;
 }

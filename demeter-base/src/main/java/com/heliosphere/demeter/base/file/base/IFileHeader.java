@@ -9,38 +9,30 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file;
+package com.heliosphere.demeter.base.file.base;
 
 import java.io.Serializable;
 
-import com.heliosphere.demeter.base.resource.IResource;
-
 /**
- * Interface defining the behavior of a very basic {@code file}.
+ * Interface defining the behavior of the header of a structured file.
  * <hr>
  * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
+ * @param 	<H> Type of the record constituting the header of the file.
  */
-public interface IFileBase extends Serializable
+public interface IFileHeader<H> extends Serializable
 {
 	/**
-	 * Returns the underlying resource representing the physical file.
+	 * Returns the header of the file.
 	 * <hr>
-	 * @return File resource.
+	 * @return Header.
 	 */
-	IResource getResource();
+	H get();
 
 	/**
-	 * Loads the file.
+	 * Sets the header of the file.
 	 * <hr>
-	 * @throws FileException Thrown to indicate an error occurred while trying to load the file.
+	 * @param header File header.
 	 */
-	void load() throws FileException;
-
-	/**
-	 * Saves the file.
-	 * <hr>
-	 * @throws FileException Thrown to indicate an error occurred while trying to save the file.
-	 */
-	void save() throws FileException;
+	void set(H header);
 }

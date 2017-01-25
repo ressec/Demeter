@@ -9,40 +9,46 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.xml.model.base;
+package com.heliosphere.demeter.base.file.base;
 
-import com.heliosphere.demeter.base.file.IFileFooter;
+import com.heliosphere.demeter.base.resource.IFile;
+import com.heliosphere.demeter.base.resource.IResource;
+import com.heliosphere.demeter.base.resource.Resource;
 
 import lombok.NonNull;
 
 /**
- * Represents the file footer part of an xml file.
+ * Provides an abstract implementation of a file.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param <F> - Element type embedded in the file footer.
  */
-public class FileFooter<F> implements IFileFooter<F>
+public abstract class AbstractFile implements IFile
 {
 	/**
-	 * Default serialization identifier. 
+	 * Default serialization identifier.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * File footer.
+	 * Underlying resource representing the physical file.
 	 */
-	private F footer;
+	IResource resource;
 
-	@Override
-	public final F get()
+	/**
+	 * Creates a new abstract file.
+	 * <hr>
+	 * @param pathname File path name.
+	 */
+	public AbstractFile(final @NonNull String pathname)
 	{
-		return footer;
+		resource = new Resource(pathname);
 	}
 
 	@Override
-	public final void set(@NonNull final F footer)
+	public final IResource getResource()
 	{
-		this.footer = footer;
+		return resource;
 	}
+
 }
