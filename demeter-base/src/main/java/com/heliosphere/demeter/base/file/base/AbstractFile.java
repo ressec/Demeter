@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file;
+package com.heliosphere.demeter.base.file.base;
 
 import com.heliosphere.demeter.base.resource.IFile;
 import com.heliosphere.demeter.base.resource.IResource;

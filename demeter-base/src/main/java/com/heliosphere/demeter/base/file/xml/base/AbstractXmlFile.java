@@ -15,8 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.heliosphere.demeter.base.file.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.FileException;
+import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
