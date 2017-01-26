@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.heliosphere.demeter.base.file.base.IFileContent;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Represents the file content part of an xml file.
@@ -34,7 +33,6 @@ public class FileContent<C> implements IFileContent<C>
 	/**
 	 * File content.
 	 */
-	@XStreamAlias("objects")
 	private List<C> content = new ArrayList<>();
 
 	@Override

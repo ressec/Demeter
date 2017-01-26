@@ -59,6 +59,14 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	private FileFooter<F> footer;
 
 	/**
+	 * Default constructor.
+	 */
+	protected AbstractStructuredFile()
+	{
+		super();
+	}
+
+	/**
 	 * Creates a new structured file.
 	 * <hr>
 	 * @param pathname File path name.
