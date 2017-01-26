@@ -9,9 +9,12 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.runner.file;
+package com.heliosphere.demeter.base.runner.file.xml.configuration;
 
+import com.heliosphere.demeter.base.file.model.FileContent;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
+import com.heliosphere.demeter.base.parameter.IParameterDefinition;
+import com.heliosphere.demeter.base.parameter.ParameterDefinition;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import lombok.NonNull;
@@ -25,8 +28,8 @@ import lombok.NonNull;
  * @param <C> - Content element type.
  * @param <F> - Footer element type.
  */
-@XStreamAlias("file")
-public class XmlDefinitionFile<H, C, F> extends AbstractXmlFile<H, C, F>
+@XStreamAlias("xml-definition-file")
+public class XmlConfigurationFile<H, C, F> extends AbstractXmlFile<H, C, F>
 {
 	/**
 	 * Default serialization identifier.
@@ -38,7 +41,7 @@ public class XmlDefinitionFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	 * <hr>
 	 * @param pathname XML file path name.
 	 */
-	public XmlDefinitionFile(final @NonNull String pathname)
+	public XmlConfigurationFile(final @NonNull String pathname)
 	{
 		super(pathname);
 	}
@@ -50,5 +53,12 @@ public class XmlDefinitionFile<H, C, F> extends AbstractXmlFile<H, C, F>
 		super.setAliases();
 
 		getEngine().alias("xml-definition-file", this.getClass());
+		getEngine().aliasField("parameters", FileContent.class, "content");
+		getEngine().alias("parameter", IParameterDefinition.class, ParameterDefinition.class);
+		//getEngine().alias("alias", String.class);
+		//getEngine().alias("allowed-value", String.class);
+		//getEngine().alias("exclude", String.class);
+		//getEngine().alias("include", String.class);
+		//getEngine().addImplicitCollection(ParameterDefinition.class, "values", "allowed-value", String.class);
 	}
 }

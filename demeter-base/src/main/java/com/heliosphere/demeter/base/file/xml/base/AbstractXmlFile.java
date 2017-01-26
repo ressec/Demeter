@@ -45,7 +45,16 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 	 */
 	@XStreamOmitField
 	@Getter
-	private XStream engine = new XStream();
+	private XStream engine;
+
+	/**
+	 * Initializes the {@code XML} engine.
+	 */
+	private void initialize()
+	{
+		engine = new XStream();
+		engine.autodetectAnnotations(true);
+	}
 
 	/**
 	 * Creates a new abstract XML file.
@@ -55,12 +64,13 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 	public AbstractXmlFile(String pathname)
 	{
 		super(pathname);
+
+		initialize();
 	}
 
 	@Override
 	public void setAliases()
 	{
-		engine.autodetectAnnotations(true);
 	}
 
 	@SuppressWarnings("unchecked")

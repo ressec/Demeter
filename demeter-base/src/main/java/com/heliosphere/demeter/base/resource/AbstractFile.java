@@ -44,6 +44,13 @@ public class AbstractFile implements IFile
 		resource = new Resource(pathname);
 	}
 
+	/**
+	 * Default constructor.
+	 */
+	protected AbstractFile()
+	{
+	}
+
 	@Override
 	public final IResource getResource()
 	{

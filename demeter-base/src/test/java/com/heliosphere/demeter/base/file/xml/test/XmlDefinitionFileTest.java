@@ -20,10 +20,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.heliosphere.demeter.base.file.xml.model.Content;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
-import com.heliosphere.demeter.base.runner.file.XmlDefinitionFile;
+import com.heliosphere.demeter.base.parameter.IParameterDefinition;
+import com.heliosphere.demeter.base.parameter.ParameterDefinition;
+import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
 
 /**
  * Test an XML definition file.
@@ -77,42 +78,54 @@ public class XmlDefinitionFileTest
 		// Empty
 	}
 
-	//	/**
-	//	 * Creates a resource based on a file with an absolute path name.
-	//	 */
-	//	@SuppressWarnings({ "static-method", "nls" })
-	//	@Test
-	//	public final void createXmlFile()
-	//	{
-	//		try
-	//		{
-	//			XmlFile<Header, Content, Footer> file = new XmlFile<>("/unit/path/test/basic-xml-file.xml");
-	//
-	//			Header header = new Header();
-	//			header.setCompany("Heliosphere Ltd.");
-	//			header.setAuthor("Resse Christophe");
-	//			header.setVersion("1.0");
-	//			header.setDescription("A simple XML file using the <FileHeader> class as header, content and footer.");
-	//			file.setHeader(header);
-	//
-	//			Footer footer = new Footer();
-	//			footer.setGenerated("on 2017/01/20 @ 16:59:05");
-	//			file.setFooter(footer);
-	//
-	//			file.addContent(new Content("Washington"));
-	//			file.addContent(new Content("Paris"));
-	//			file.addContent(new Content("London"));
-	//			file.addContent(new Content("Singapore"));
-	//
-	//			file.save();
-	//
-	//			Assert.assertTrue(file != null);
-	//		}
-	//		catch (Exception e)
-	//		{
-	//			fail(e.getMessage());
-	//		}
-	//	}
+	/**
+	 * Creates a resource based on a file with an absolute path name.
+	 */
+	@SuppressWarnings({ "static-method", "nls" })
+	@Test
+	public final void createXmlFile()
+	{
+		try
+		{
+			XmlConfigurationFile<Header, IParameterDefinition, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
+
+			Header header = new Header();
+			header.setCompany("Heliosphere Ltd.");
+			header.setAuthor("Resse Christophe");
+			header.setVersion("1.0");
+			header.setDescription("A simple test xml configuration file typically used by a runner.");
+			file.setHeader(header);
+
+			Footer footer = new Footer();
+			footer.setGenerated("on 2017/01/26 @ 10:59:58");
+			file.setFooter(footer);
+
+			IParameterDefinition p = new ParameterDefinition();
+			p.setName("section");
+			p.setDescription("Processes a specific section.");
+			p.setPriority(150);
+			p.setReserved(false);
+			p.setMandatory(false);
+			p.addAlias("s");
+			p.addAlias("sec");
+			p.addExclude("generate");
+			p.addExclude("ingest");
+			p.addInclude("analyze");
+			p.addAllowed("CPA");
+			p.addAllowed("TAK");
+			p.addAllowed("CUY");
+			p.addAllowed("WTRZ");
+			file.addContent(p);
+
+			file.save();
+
+			Assert.assertTrue(file != null);
+		}
+		catch (Exception e)
+		{
+			fail(e.getMessage());
+		}
+	}
 
 	/**
 	 * Loads our test xml definition file.
@@ -123,7 +136,7 @@ public class XmlDefinitionFileTest
 	{
 		try
 		{
-			XmlDefinitionFile<Header, Content, Footer> file = new XmlDefinitionFile<>("/unit/path/test/test-runner-definition.xml");
+			XmlConfigurationFile<Header, IParameterDefinition, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
 			file.load();
 
 			Assert.assertTrue(file != null);

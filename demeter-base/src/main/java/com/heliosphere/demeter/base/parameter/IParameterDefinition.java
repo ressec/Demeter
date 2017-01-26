@@ -68,6 +68,20 @@ public interface IParameterDefinition extends IParameter
 	void setMandatory(boolean isMandatory);
 
 	/**
+	 * Returns if this parameter is reserved for internal usage only?
+	 * <hr>
+	 * @return {@code True} if this parameter is reserved for internal usage only, {@code false} otherwise.
+	 */
+	boolean isReserved();
+
+	/**
+	 * Sets if this parameter is reserved for internal usage only.
+	 * <hr>
+	 * @param isReserved {@code True} if this parameter is reserved for internal usage only, {@code false} otherwise.
+	 */
+	void setReserved(boolean isReserved);
+
+	/**
 	 * Returns a list of allowed values. If this list is {@code null}, it means there is
 	 * no restriction for the values this parameter can hold.
 	 * <hr>
@@ -83,6 +97,20 @@ public interface IParameterDefinition extends IParameter
 	void setAllowedValues(List<String> values);
 
 	/**
+	 * Returns a list of parameter aliases.
+	 * <hr>
+	 * @return List of aliases.
+	 */
+	List<String> getAliases();
+
+	/**
+	 * Sets a list of parameter aliases.
+	 * <hr>
+	 * @param values List of aliases.
+	 */
+	void setAliases(List<String> values);
+
+	/**
 	 * Returns if the given value is allowed?
 	 * <hr>
 	 * @param value Value to check.
@@ -93,16 +121,16 @@ public interface IParameterDefinition extends IParameter
 	/**
 	 * Returns a list of incompatible parameters.
 	 * <hr>
-	 * @return List of incompatible parameters.
+	 * @return List of incompatible parameters name.
 	 */
-	List<IParameterDefinition> getIncompatibleParameters();
+	List<String> getIncompatibleParameters();
 
 	/**
 	 * Sets a list of incompatible parameters.
 	 * <hr>
-	 * @param parameters List of incompatible parameters to set.
+	 * @param parameters List of incompatible parameters name to set.
 	 */
-	void setIncompatibleParameters(List<IParameterDefinition> parameters);
+	void setIncompatibleParameters(List<String> parameters);
 
 	/**
 	 * Returns if the given parameter is incompatible?
@@ -115,16 +143,16 @@ public interface IParameterDefinition extends IParameter
 	/**
 	 * Returns a list of required parameters.
 	 * <hr>
-	 * @return List of required parameters.
+	 * @return List of required parameters name.
 	 */
-	List<IParameterDefinition> getRequiredParameters();
+	List<String> getRequiredParameters();
 
 	/**
 	 * Sets a list of required parameters.
 	 * <hr>
-	 * @param parameters List of required parameters to set.
+	 * @param parameters List of required parameters name to set.
 	 */
-	void setRequiredParameters(List<IParameterDefinition> parameters);
+	void setRequiredParameters(List<String> parameters);
 
 	/**
 	 * Returns if the given parameter is required?
@@ -133,4 +161,32 @@ public interface IParameterDefinition extends IParameter
 	 * @return {@code True} if the given parameter is required, {@code false} otherwise. 
 	 */
 	boolean isRequired(IParameter parameter);
+
+	/**
+	 * Adds an alias to the parameter's alias list.
+	 * <hr>
+	 * @param alias Alias to add to the list. If the given alias already exist, it will be ignored.
+	 */
+	void addAlias(String alias);
+
+	/**
+	 * Adds a parameter name to the list of excluded - incompatible - parameters for this parameter.
+	 * <hr>
+	 * @param name Parameter name to be added to the list of the excluded parameters.
+	 */
+	void addExclude(String name);
+
+	/**
+	 * Adds a parameter name to the list of included - required - parameters for this parameter.
+	 * <hr>
+	 * @param name Parameter name to be added to the list of the included parameters.
+	 */
+	void addInclude(String name);
+
+	/**
+	 * Adds a value to the list of allowed values for this parameter.
+	 * <hr>
+	 * @param value Allowed value to add to the list.
+	 */
+	void addAllowed(String value);
 }
