@@ -71,6 +71,7 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 	@Override
 	public void setAliases()
 	{
+		// Empty.
 	}
 
 	@SuppressWarnings("unchecked")

@@ -11,11 +11,14 @@
  */
 package com.heliosphere.demeter.base.runner.file.xml.configuration;
 
-import com.heliosphere.demeter.base.file.model.FileContent;
+import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
+import com.heliosphere.demeter.base.file.xml.model.Footer;
+import com.heliosphere.demeter.base.file.xml.model.Header;
 import com.heliosphere.demeter.base.parameter.IParameterDefinition;
 import com.heliosphere.demeter.base.parameter.ParameterDefinition;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.converters.collections.CollectionConverter;
+import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 
 import lombok.NonNull;
 
@@ -28,7 +31,6 @@ import lombok.NonNull;
  * @param <C> - Content element type.
  * @param <F> - Footer element type.
  */
-@XStreamAlias("xml-definition-file")
 public class XmlConfigurationFile<H, C, F> extends AbstractXmlFile<H, C, F>
 {
 	/**
@@ -52,13 +54,37 @@ public class XmlConfigurationFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	{
 		super.setAliases();
 
-		getEngine().alias("xml-definition-file", this.getClass());
-		getEngine().aliasField("parameters", FileContent.class, "content");
+		ClassAliasingMapper mapper = new ClassAliasingMapper(getEngine().getMapper());
+
+		// Converter for elements of the 'aliases' list in ParameterDefinition class.
+		mapper.addClassAlias("alias", String.class);
+		getEngine().registerLocalConverter(ParameterDefinition.class, "aliases", new CollectionConverter(mapper));
+
+		// Converter for elements of the 'values' list in ParameterDefinition class.
+		mapper.addClassAlias("value", String.class);
+		getEngine().registerLocalConverter(ParameterDefinition.class, "values", new CollectionConverter(mapper));
+
+		// Converter for elements of the 'excludes' list in ParameterDefinition class.
+		mapper.addClassAlias("exclude", String.class);
+		getEngine().registerLocalConverter(ParameterDefinition.class, "excludes", new CollectionConverter(mapper));
+
+		// Converter for elements of the 'includes' list in ParameterDefinition class.
+		mapper.addClassAlias("include", String.class);
+		getEngine().registerLocalConverter(ParameterDefinition.class, "includes", new CollectionConverter(mapper));
+
+		// Aliases the main file tag.
+		getEngine().alias("xml-configuration-file", this.getClass());
+
+		// Aliases the interface of a parameter definition with its implementation.
 		getEngine().alias("parameter", IParameterDefinition.class, ParameterDefinition.class);
-		//getEngine().alias("alias", String.class);
-		//getEngine().alias("allowed-value", String.class);
-		//getEngine().alias("exclude", String.class);
-		//getEngine().alias("include", String.class);
-		//getEngine().addImplicitCollection(ParameterDefinition.class, "values", "allowed-value", String.class);
+
+		// Aliases the header tag with the Header class.
+		getEngine().alias("header", Header.class);
+
+		// Aliases the footer tag with the Footer class.
+		getEngine().alias("footer", Footer.class);
+
+		// Aliases the 'content' list as 'parameters'.
+		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "parameters");
 	}
 }

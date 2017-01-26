@@ -11,14 +11,12 @@
  */
 package com.heliosphere.demeter.base.file.base;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.heliosphere.demeter.base.file.FileException;
-import com.heliosphere.demeter.base.file.model.FileContent;
-import com.heliosphere.demeter.base.file.model.FileFooter;
-import com.heliosphere.demeter.base.file.model.FileHeader;
 import com.heliosphere.demeter.base.resource.AbstractFile;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import lombok.NonNull;
@@ -43,20 +41,21 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	/** 
 	 * File header.
 	 */
-	@XStreamAlias("file-header")
-	private FileHeader<H> header;
+	@XStreamImplicit
+	// TIP: Is defined as a list to avoid XStream to generate a 'class=...' attribute in the XML!
+	private List<H> header;
 
 	/**
 	 * File content.
 	 */
-	@XStreamAlias("file-content")
-	private FileContent<C> content;
+	private List<C> content;
 
 	/**
 	 * File footer.
 	 */
-	@XStreamAlias("file-footer")
-	private FileFooter<F> footer;
+	@XStreamImplicit
+	// TIP: Is defined as a list to avoid XStream to generate a 'class=...' attribute in the XML!
+	private List<F> footer;
 
 	/**
 	 * Default constructor.
@@ -74,6 +73,10 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	public AbstractStructuredFile(final @NonNull String pathname)
 	{
 		super(pathname);
+
+		header = new ArrayList<>();
+		content = new ArrayList<>();
+		footer = new ArrayList<>();
 	}
 
 	@Override
@@ -82,62 +85,52 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	@Override
 	public final H getHeader()
 	{
-		return header.get();
+		return header.size() > 0 ? header.get(0) : null;
 	}
 
 	@Override
 	public final void setHeader(H header)
 	{
-		if (this.header == null)
-		{
-			this.header = new FileHeader<>();
-		}
-
-		this.header.set(header);
+		this.header.clear();
+		this.header.add(header);
 	}
 
 	@Override
 	public final List<C> getContent()
 	{
-		return content.get();
+		return content;
 	}
 
 	@Override
 	public final void setContent(List<C> content)
 	{
-		if (this.content == null)
-		{
-			this.content = new FileContent<>();
-		}
-
-		this.content.set(content);
-	}
-
-	@Override
-	public final void addContent(C element)
-	{
-		if (this.content == null)
-		{
-			this.content = new FileContent<>();
-		}
-
-		this.content.add(element);
+		this.content = content;
 	}
 
 	@Override
 	public final F getFooter()
 	{
-		return footer.get();
+		return footer.size() > 0 ? footer.get(0) : null;
 	}
 
 	@Override
 	public final void setFooter(F footer)
 	{
-		if (this.footer == null)
+		this.footer.clear();
+		this.footer.add(footer);
+	}
+
+	@Override
+	public void addElement(C element)
+	{
+		if (content == null)
 		{
-			this.footer = new FileFooter<>();
+			content = new ArrayList<>();
 		}
 
-		this.footer.set(footer);
+		if (!content.contains(element))
+		{
+			content.add(element);
+		}
 	}
 }

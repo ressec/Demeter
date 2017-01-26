@@ -99,10 +99,10 @@ public class XmlFileTest
 			footer.setGenerated("on 2017/01/20 @ 16:59:05");
 			file.setFooter(footer);
 
-			file.addContent(new Content("Washington"));
-			file.addContent(new Content("Paris"));
-			file.addContent(new Content("London"));
-			file.addContent(new Content("Singapore"));
+			file.addElement(new Content("Washington"));
+			file.addElement(new Content("Paris"));
+			file.addElement(new Content("London"));
+			file.addElement(new Content("Singapore"));
 
 			file.save();
 

@@ -46,13 +46,18 @@ public interface IStructuredFile<H, C, F> extends IFileBase
 	List<C> getContent();
 
 	/**
-	 * Sets the file content.
+	 * Sets the file content list of elements.
 	 * <hr>
-	 * @param content List of elements composing the file content to set.
+	 * @param content File content to set.
 	 */
-	void setContent(final List<C> content);
+	void setContent(List<C> content);
 
-	void addContent(C element);
+	/**
+	 * Adds an element to the file content.
+	 * <hr>
+	 * @param element Element to add to the file content list.
+	 */
+	void addElement(C element);
 
 	/**
 	 * Returns the file footer.
