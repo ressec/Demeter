@@ -22,8 +22,8 @@ import org.junit.Test;
 
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
-import com.heliosphere.demeter.base.parameter.IParameterDefinition;
-import com.heliosphere.demeter.base.parameter.ParameterDefinition;
+import com.heliosphere.demeter.base.parameter.IParameterConfiguration;
+import com.heliosphere.demeter.base.parameter.ParameterConfiguration;
 import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
 
 /**
@@ -87,7 +87,7 @@ public class XmlDefinitionFileTest
 	{
 		try
 		{
-			XmlConfigurationFile<Header, IParameterDefinition, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
+			XmlConfigurationFile<Header, IParameterConfiguration, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
 
 			Header header = new Header();
 			header.setCompany("Heliosphere Ltd.");
@@ -100,7 +100,7 @@ public class XmlDefinitionFileTest
 			footer.setGenerated("on 2017/01/26 @ 10:59:58");
 			file.setFooter(footer);
 
-			IParameterDefinition p = new ParameterDefinition();
+			IParameterConfiguration p = new ParameterConfiguration();
 			p.setName("section");
 			p.setDescription("Processes a specific section.");
 			p.setPriority(150);
@@ -136,7 +136,7 @@ public class XmlDefinitionFileTest
 	{
 		try
 		{
-			XmlConfigurationFile<Header, IParameterDefinition, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
+			XmlConfigurationFile<Header, IParameterConfiguration, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
 			file.load();
 
 			Assert.assertTrue(file != null);

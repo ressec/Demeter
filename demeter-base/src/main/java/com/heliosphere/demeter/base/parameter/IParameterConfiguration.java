@@ -19,7 +19,7 @@ import java.util.List;
  * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public interface IParameterDefinition extends IParameter
+public interface IParameterConfiguration extends IParameter
 {
 	/**
 	 * Returns the parameter priority.

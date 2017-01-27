@@ -83,5 +83,5 @@ public interface IParameterExecution extends IParameter
 	 * <hr>
 	 * @return Parameter definition.
 	 */
-	IParameterDefinition getDefinition();
+	IParameterConfiguration getDefinition();
 }

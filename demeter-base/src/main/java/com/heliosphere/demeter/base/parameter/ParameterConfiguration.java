@@ -24,7 +24,7 @@ import lombok.NonNull;
  * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class ParameterDefinition extends AbstractParameter implements IParameterDefinition
+public class ParameterConfiguration extends AbstractParameter implements IParameterConfiguration
 {
 	/**
 	 * Default serialization identifier.
