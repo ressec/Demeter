@@ -11,9 +11,6 @@
  */
 package com.heliosphere.demeter.base.file.xml.model;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -25,16 +22,8 @@ import lombok.Setter;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-@XStreamAlias("object")
 public class Content
 {
-	/**
-	 * This attribute is added to conform to the xml element naming convention used at Heliosphere.
-	 */
-	@XStreamAsAttribute
-	@XStreamAlias("class")
-	private final String className = this.getClass().getName();
-
 	/**
 	 * Value.
 	 */
