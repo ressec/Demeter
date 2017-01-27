@@ -79,7 +79,7 @@ public class XmlDefinitionFileTest
 	}
 
 	/**
-	 * Creates a resource based on a file with an absolute path name.
+	 * Creates an XML configuration file.
 	 */
 	@SuppressWarnings({ "static-method", "nls" })
 	@Test
@@ -115,7 +115,7 @@ public class XmlDefinitionFileTest
 			p.addAllowed("TAK");
 			p.addAllowed("CUY");
 			p.addAllowed("WTRZ");
-			file.addContent(p);
+			file.addElement(p);
 
 			file.save();
 
@@ -128,7 +128,7 @@ public class XmlDefinitionFileTest
 	}
 
 	/**
-	 * Loads our test xml definition file.
+	 * Loads the XML configuration file.
 	 */
 	@SuppressWarnings({ "static-method", "nls" })
 	@Test

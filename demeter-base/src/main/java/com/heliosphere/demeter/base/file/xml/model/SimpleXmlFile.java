@@ -11,6 +11,7 @@
  */
 package com.heliosphere.demeter.base.file.xml.model;
 
+import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -50,8 +51,17 @@ public class SimpleXmlFile<H, C, F> extends AbstractXmlFile<H, C, F>
 		super.setAliases();
 
 		getEngine().alias("file", this.getClass());
-		//getEngine().alias("object", Content.class, Content.class);
-		//getEngine().alias("tata", Header.class);
-		//getEngine().alias("footer", Footer.class, Object.class);
+
+		// Aliases the header tag with the Header class.
+		getEngine().alias("header", Header.class);
+
+		// Aliases the footer tag with the Footer class.
+		getEngine().alias("footer", Footer.class);
+
+		// Aliases the content tag with the Content class.
+		getEngine().alias("content", Content.class);
+
+		// Aliases the 'content' list as 'parameters'.
+		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "data");
 	}
 }

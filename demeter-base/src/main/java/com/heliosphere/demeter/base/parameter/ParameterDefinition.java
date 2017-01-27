@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import lombok.NonNull;
 
@@ -59,25 +58,21 @@ public class ParameterDefinition extends AbstractParameter implements IParameter
 	/**
 	 * List of aliases.
 	 */
-	@XStreamImplicit(itemFieldName = "alias")
 	private List<String> aliases;
 
 	/**
 	 * List of allowed values.
 	 */
-	@XStreamImplicit(itemFieldName = "allowed-value")
 	private List<String> values;
 
 	/**
 	 * List of incompatible parameters.
 	 */
-	@XStreamImplicit(itemFieldName = "incompatible")
 	private List<String> excludes;
 
 	/**
 	 * List of required parameters.
 	 */
-	@XStreamImplicit(itemFieldName = "required")
 	private List<String> includes;
 
 	@Override
