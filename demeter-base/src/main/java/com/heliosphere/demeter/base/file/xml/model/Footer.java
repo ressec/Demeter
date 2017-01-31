@@ -11,6 +11,8 @@
  */
 package com.heliosphere.demeter.base.file.xml.model;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,5 +26,5 @@ public class Footer
 {
 	@Getter
 	@Setter
-	private String generated;
+	private Date generated;
 }
