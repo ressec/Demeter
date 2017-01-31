@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.parameter;
+package com.heliosphere.demeter.base.runner.parameter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import lombok.NonNull;
  * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class ParameterDefinition extends AbstractParameter implements IParameterDefinition
+public class ParameterConfiguration extends AbstractParameter implements IParameterConfiguration
 {
 	/**
 	 * Default serialization identifier.

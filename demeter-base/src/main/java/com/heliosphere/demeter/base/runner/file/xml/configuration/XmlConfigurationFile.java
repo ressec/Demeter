@@ -15,8 +15,8 @@ import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
-import com.heliosphere.demeter.base.parameter.IParameterDefinition;
-import com.heliosphere.demeter.base.parameter.ParameterDefinition;
+import com.heliosphere.demeter.base.runner.parameter.IParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.ParameterConfiguration;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 
@@ -58,25 +58,25 @@ public class XmlConfigurationFile<H, C, F> extends AbstractXmlFile<H, C, F>
 
 		// Converter for elements of the 'aliases' list in ParameterDefinition class.
 		mapper.addClassAlias("alias", String.class);
-		getEngine().registerLocalConverter(ParameterDefinition.class, "aliases", new CollectionConverter(mapper));
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "aliases", new CollectionConverter(mapper));
 
 		// Converter for elements of the 'values' list in ParameterDefinition class.
 		mapper.addClassAlias("value", String.class);
-		getEngine().registerLocalConverter(ParameterDefinition.class, "values", new CollectionConverter(mapper));
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "values", new CollectionConverter(mapper));
 
 		// Converter for elements of the 'excludes' list in ParameterDefinition class.
 		mapper.addClassAlias("exclude", String.class);
-		getEngine().registerLocalConverter(ParameterDefinition.class, "excludes", new CollectionConverter(mapper));
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "excludes", new CollectionConverter(mapper));
 
 		// Converter for elements of the 'includes' list in ParameterDefinition class.
 		mapper.addClassAlias("include", String.class);
-		getEngine().registerLocalConverter(ParameterDefinition.class, "includes", new CollectionConverter(mapper));
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "includes", new CollectionConverter(mapper));
 
 		// Aliases the main file tag.
 		getEngine().alias("xml-configuration-file", this.getClass());
 
 		// Aliases the interface of a parameter definition with its implementation.
-		getEngine().alias("parameter", IParameterDefinition.class, ParameterDefinition.class);
+		getEngine().alias("parameter", IParameterConfiguration.class, ParameterConfiguration.class);
 
 		// Aliases the header tag with the Header class.
 		getEngine().alias("header", Header.class);

@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.parameter;
+package com.heliosphere.demeter.base.runner.parameter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ public class ParameterExecution extends AbstractParameter implements IParameterE
 	/**
 	 * Parameter definition.
 	 */
-	private IParameterDefinition definition;
+	private IParameterConfiguration definition;
 
 	@Override
 	public final String getValue()
@@ -119,7 +119,7 @@ public class ParameterExecution extends AbstractParameter implements IParameterE
 	}
 
 	@Override
-	public final IParameterDefinition getDefinition()
+	public final IParameterConfiguration getDefinition()
 	{
 		return definition;
 	}

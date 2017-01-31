@@ -9,31 +9,29 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.parameter;
-
-import com.heliosphere.demeter.base.exception.EnumerationException;
+package com.heliosphere.demeter.base.runner.processor;
 
 /**
- * This interface defines the behavior of enumerations extending the notion of {@code parameter types}. 
+ * This interface defines the behavior of a listener that want to be notified of events that occur
+ * in a {@link IProcessor}. 
  * <hr>
  * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public interface IParameterType
+public interface IProcessorListener
 {
 	/**
-	 * Creates an enumerated value from a given parameter name.
-	 * <hr>
-	 * @param name Parameter name.
-	 * @return Enumerated value.
-	 * @throws EnumerationException Thrown in case an error occurred while trying to create the enumerated value.
+	 * Triggered when the processor has started its execution cycle.
 	 */
-	Enum<? extends IParameterType> fromName(final String name) throws EnumerationException;
+	void onStart();
 
 	/**
-	 * Returns the parameter name.
-	 * <hr>
-	 * @return Parameter name.
+	 * Triggered when the processor has finished its execution cycle.
 	 */
-	String getName();
+	void onFinish();
+
+	/**
+	 * Triggered when the processor execution has raised a new error.
+	 */
+	void onException(Exception e);
 }
