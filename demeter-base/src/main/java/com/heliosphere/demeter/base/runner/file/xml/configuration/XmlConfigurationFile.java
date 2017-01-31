@@ -23,7 +23,7 @@ import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 import lombok.NonNull;
 
 /**
- * Provides a concrete implementation of a {@code Runner} XML definition file.
+ * Provides a concrete implementation of a {@code Runner} XML configuration file.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
