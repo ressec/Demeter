@@ -22,9 +22,9 @@ import org.junit.Test;
 
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
-import com.heliosphere.demeter.base.parameter.IParameterConfiguration;
-import com.heliosphere.demeter.base.parameter.ParameterConfiguration;
 import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
+import com.heliosphere.demeter.base.runner.parameter.IParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.ParameterConfiguration;
 
 /**
  * Test an XML definition file.

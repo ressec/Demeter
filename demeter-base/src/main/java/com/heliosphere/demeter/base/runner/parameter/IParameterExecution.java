@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.parameter;
+package com.heliosphere.demeter.base.runner.parameter;
 
 /**
  * Defines the behavior of an execution parameter.
