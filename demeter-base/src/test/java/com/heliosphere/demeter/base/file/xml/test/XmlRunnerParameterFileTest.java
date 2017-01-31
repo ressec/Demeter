@@ -162,7 +162,7 @@ public class XmlRunnerParameterFileTest
 	{
 		try
 		{
-			XmlExecutionFile<Header, IParameterExecution, Footer> file = new XmlExecutionFile<>("/unit/path/test/test-runner-execution.xml");
+			XmlExecutionFile file = new XmlExecutionFile("/unit/path/test/test-runner-execution.xml");
 
 			Header header = new Header();
 			header.setCompany("Heliosphere Ltd.");
@@ -204,7 +204,7 @@ public class XmlRunnerParameterFileTest
 	{
 		try
 		{
-			XmlExecutionFile<Header, IParameterExecution, Footer> file = new XmlExecutionFile<>("/unit/path/test/test-runner-execution.xml");
+			XmlExecutionFile file = new XmlExecutionFile("/unit/path/test/test-runner-execution.xml");
 			file.load();
 
 			Assert.assertTrue(file != null);

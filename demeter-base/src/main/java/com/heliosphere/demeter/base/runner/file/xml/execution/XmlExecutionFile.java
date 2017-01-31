@@ -27,11 +27,8 @@ import lombok.NonNull;
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param <H> - Header type.
- * @param <C> - Content element type.
- * @param <F> - Footer element type.
  */
-public class XmlExecutionFile<H, C, F> extends AbstractXmlFile<H, C, F>
+public class XmlExecutionFile extends AbstractXmlFile<Header, IParameterExecution, Footer>
 {
 	/**
 	 * Default serialization identifier.
