@@ -13,6 +13,8 @@ package com.heliosphere.demeter.base.file.xml.test;
 
 import static org.junit.Assert.fail;
 
+import java.util.Calendar;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -22,17 +24,21 @@ import org.junit.Test;
 
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
+import com.heliosphere.demeter.base.runner.IRunner;
 import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
+import com.heliosphere.demeter.base.runner.file.xml.execution.XmlExecutionFile;
 import com.heliosphere.demeter.base.runner.parameter.IParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.IParameterExecution;
 import com.heliosphere.demeter.base.runner.parameter.ParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.ParameterExecution;
 
 /**
- * Test an XML definition file.
+ * A test dedicated to test the loading and saving of a {@link IRunner} XML configuration and execution files.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class XmlDefinitionFileTest
+public class XmlRunnerParameterFileTest
 {
 	/**
 	 * Initialization of the test cases.
@@ -79,11 +85,11 @@ public class XmlDefinitionFileTest
 	}
 
 	/**
-	 * Creates an XML configuration file.
+	 * Test the saving of a XML {@link IRunner} configuration file.
 	 */
 	@SuppressWarnings({ "static-method", "nls" })
 	@Test
-	public final void createXmlFile()
+	public final void writeXmlConfigurationFile()
 	{
 		try
 		{
@@ -97,7 +103,7 @@ public class XmlDefinitionFileTest
 			file.setHeader(header);
 
 			Footer footer = new Footer();
-			footer.setGenerated("on 2017/01/26 @ 10:59:58");
+			footer.setGenerated(Calendar.getInstance().getTime());
 			file.setFooter(footer);
 
 			IParameterConfiguration p = new ParameterConfiguration();
@@ -128,7 +134,7 @@ public class XmlDefinitionFileTest
 	}
 
 	/**
-	 * Loads the XML configuration file.
+	 * Test the loading of a XML {@link IRunner} configuration file.
 	 */
 	@SuppressWarnings({ "static-method", "nls" })
 	@Test
@@ -137,6 +143,68 @@ public class XmlDefinitionFileTest
 		try
 		{
 			XmlConfigurationFile<Header, IParameterConfiguration, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
+			file.load();
+
+			Assert.assertTrue(file != null);
+		}
+		catch (Exception e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	/**
+	 * Test the saving of a XML {@link IRunner} execution file.
+	 */
+	@SuppressWarnings({ "static-method", "nls" })
+	@Test
+	public final void writeXmlExecutionFile()
+	{
+		try
+		{
+			XmlExecutionFile<Header, IParameterExecution, Footer> file = new XmlExecutionFile<>("/unit/path/test/test-runner-execution.xml");
+
+			Header header = new Header();
+			header.setCompany("Heliosphere Ltd.");
+			header.setAuthor("Resse Christophe");
+			header.setVersion("1.0");
+			header.setDescription("A simple test xml configuration file typically used by a runner.");
+			file.setHeader(header);
+
+			Footer footer = new Footer();
+			footer.setGenerated(Calendar.getInstance().getTime());
+			file.setFooter(footer);
+
+			IParameterExecution help = new ParameterExecution();
+			help.setName("h"); // Name or alias can be injected here.
+			help.setValue("");
+			file.addElement(help);
+
+			IParameterExecution input = new ParameterExecution();
+			input.setName("i"); // Name or alias can be injected here.
+			input.setValue("c:/temp/work");
+			file.addElement(input);
+
+			file.save();
+
+			Assert.assertTrue(file != null);
+		}
+		catch (Exception e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	/**
+	 * Test the loading of a XML {@link IRunner} execution file.
+	 */
+	@SuppressWarnings({ "static-method", "nls" })
+	@Test
+	public final void loadExecutionXmlFile()
+	{
+		try
+		{
+			XmlExecutionFile<Header, IParameterExecution, Footer> file = new XmlExecutionFile<>("/unit/path/test/test-runner-execution.xml");
 			file.load();
 
 			Assert.assertTrue(file != null);
