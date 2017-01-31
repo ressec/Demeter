@@ -93,7 +93,7 @@ public class XmlRunnerParameterFileTest
 	{
 		try
 		{
-			XmlConfigurationFile<Header, IParameterConfiguration, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
+			XmlConfigurationFile file = new XmlConfigurationFile("/unit/path/test/test-runner-definition.xml");
 
 			Header header = new Header();
 			header.setCompany("Heliosphere Ltd.");
@@ -142,7 +142,7 @@ public class XmlRunnerParameterFileTest
 	{
 		try
 		{
-			XmlConfigurationFile<Header, IParameterConfiguration, Footer> file = new XmlConfigurationFile<>("/unit/path/test/test-runner-definition.xml");
+			XmlConfigurationFile file = new XmlConfigurationFile("/unit/path/test/test-runner-definition.xml");
 			file.load();
 
 			Assert.assertTrue(file != null);
