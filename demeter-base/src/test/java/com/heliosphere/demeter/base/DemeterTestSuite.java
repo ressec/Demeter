@@ -21,9 +21,14 @@ import com.heliosphere.demeter.base.file.xml.test.XmlFileTest;
 import com.heliosphere.demeter.base.log4j.category.UnitTest;
 import com.heliosphere.demeter.base.resource.test.ResourceTest;
 
+/**
+ * Defines the {@code demeter} unit test suite.
+ * <hr>
+ * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
 @RunWith(Categories.class)
 @IncludeCategory(UnitTest.class)
-
 @SuiteClasses({ ResourceTest.class, XmlFileTest.class, XmlDefinitionFileTest.class })
 public class DemeterTestSuite
 {
