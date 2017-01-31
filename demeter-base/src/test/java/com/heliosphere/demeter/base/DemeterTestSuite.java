@@ -17,6 +17,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import com.heliosphere.demeter.base.file.xml.test.XmlFileTest;
 import com.heliosphere.demeter.base.file.xml.test.XmlRunnerParameterFileTest;
+import com.heliosphere.demeter.base.resource.bundle.test.ResourceBundleTest;
 import com.heliosphere.demeter.base.resource.test.ResourceTest;
 
 /**
@@ -26,7 +27,7 @@ import com.heliosphere.demeter.base.resource.test.ResourceTest;
  * @version 1.0.0
  */
 @RunWith(Suite.class)
-@SuiteClasses({ ResourceTest.class, XmlFileTest.class, XmlRunnerParameterFileTest.class })
+@SuiteClasses({ ResourceBundleTest.class, ResourceTest.class, XmlFileTest.class, XmlRunnerParameterFileTest.class })
 public class DemeterTestSuite
 {
 	// Empty.

@@ -34,7 +34,7 @@ import com.heliosphere.demeter.base.resource.bundle.ResourceBundleManager;
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public final class ResourceBundle
+public final class ResourceBundleTest
 {
 	/**
 	 * Dummy message in english.
