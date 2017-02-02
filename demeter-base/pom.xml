@@ -21,6 +21,10 @@
   		<groupId>commons-io</groupId>
   		<artifactId>commons-io</artifactId>
   	</dependency>
+  	<dependency>
+  		<groupId>uk.com.robust-it</groupId>
+  		<artifactId>cloning</artifactId>
+  	</dependency>
   </dependencies>
   <dependencyManagement>
   	<dependencies>
