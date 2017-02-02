@@ -9,11 +9,13 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.runner.parameter;
+package com.heliosphere.demeter.base.runner.parameter.configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.heliosphere.demeter.base.runner.parameter.base.AbstractParameter;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import lombok.NonNull;

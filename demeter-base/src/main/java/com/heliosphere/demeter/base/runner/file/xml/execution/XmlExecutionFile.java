@@ -15,8 +15,8 @@ import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
-import com.heliosphere.demeter.base.runner.parameter.IParameterExecution;
-import com.heliosphere.demeter.base.runner.parameter.ParameterExecution;
+import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
+import com.heliosphere.demeter.base.runner.parameter.execution.ParameterExecution;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 

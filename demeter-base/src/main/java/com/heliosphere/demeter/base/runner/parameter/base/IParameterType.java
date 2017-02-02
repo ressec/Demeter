@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.runner.parameter;
+package com.heliosphere.demeter.base.runner.parameter.base;
 
 import com.heliosphere.demeter.base.exception.EnumerationException;
 

@@ -28,11 +28,11 @@ import com.heliosphere.demeter.base.runner.annotation.RunnerFile;
 import com.heliosphere.demeter.base.runner.context.IContext;
 import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
 import com.heliosphere.demeter.base.runner.file.xml.execution.XmlExecutionFile;
-import com.heliosphere.demeter.base.runner.parameter.IParameter;
-import com.heliosphere.demeter.base.runner.parameter.IParameterConfiguration;
-import com.heliosphere.demeter.base.runner.parameter.IParameterExecution;
-import com.heliosphere.demeter.base.runner.parameter.IParameterType;
-import com.heliosphere.demeter.base.runner.parameter.ParameterException;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
+import com.heliosphere.demeter.base.runner.parameter.base.ParameterException;
+import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
 import com.heliosphere.demeter.base.runner.processor.IProcessor;
 
 import lombok.NonNull;
@@ -60,7 +60,7 @@ public abstract class AbstractRunner implements IRunner
 	/**
 	 * Collection of contexts for this runner.
 	 */
-	private List<IContext<?>> contexts = new ArrayList<>();
+	private List<IContext> contexts = new ArrayList<>();
 
 	/**
 	 * Processor class to use.
@@ -292,10 +292,15 @@ public abstract class AbstractRunner implements IRunner
 	}
 
 	@Override
-	public IXmlFile getConfiguration()
+	public final IXmlFile getConfiguration()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return configuration;
+	}
+
+	@Override
+	public final IXmlFile getExecution()
+	{
+		return execution;
 	}
 
 	@Override

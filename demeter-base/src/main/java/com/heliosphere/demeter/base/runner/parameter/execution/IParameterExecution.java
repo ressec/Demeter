@@ -9,12 +9,16 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.runner.parameter;
+package com.heliosphere.demeter.base.runner.parameter.execution;
+
+import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
+import com.heliosphere.demeter.base.runner.parameter.base.ParameterStatusType;
+import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
 
 /**
  * Defines the behavior of an execution parameter.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
 public interface IParameterExecution extends IParameter
@@ -84,4 +88,18 @@ public interface IParameterExecution extends IParameter
 	 * @return Parameter definition.
 	 */
 	IParameterConfiguration getDefinition();
+
+	/**
+	 * Returns the status of the parameter.
+	 * <hr>
+	 * @return Parameter status.
+	 */
+	ParameterStatusType getStatus();
+
+	/**
+	 * Sets the status of the parameter.
+	 * <hr>
+	 * @param status Status to set.
+	 */
+	void setStatus(ParameterStatusType status);
 }

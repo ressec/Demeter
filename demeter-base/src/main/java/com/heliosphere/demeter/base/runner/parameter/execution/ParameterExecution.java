@@ -9,23 +9,27 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.runner.parameter;
+package com.heliosphere.demeter.base.runner.parameter.execution;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.heliosphere.demeter.base.runner.parameter.base.AbstractParameter;
+import com.heliosphere.demeter.base.runner.parameter.base.ParameterStatusType;
+import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
 
 import lombok.NonNull;
 
 /**
  * Provides a basic implementation of a parameter execution.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
 public class ParameterExecution extends AbstractParameter implements IParameterExecution
 {
 	/**
-	 * Default serialization identifier. 
+	 * Default serialization identifier.
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -33,6 +37,11 @@ public class ParameterExecution extends AbstractParameter implements IParameterE
 	 * Parameter value.
 	 */
 	private String value;
+
+	/**
+	 * Parameter status.
+	 */
+	private ParameterStatusType status = ParameterStatusType.UNPROCESSED;
 
 	/**
 	 * Parameter properties.
@@ -122,5 +131,17 @@ public class ParameterExecution extends AbstractParameter implements IParameterE
 	public final IParameterConfiguration getDefinition()
 	{
 		return definition;
+	}
+
+	@Override
+	public final ParameterStatusType getStatus()
+	{
+		return status;
+	}
+
+	@Override
+	public final void setStatus(@NonNull final ParameterStatusType status)
+	{
+		this.status = status;
 	}
 }

@@ -27,10 +27,10 @@ import com.heliosphere.demeter.base.file.xml.model.Header;
 import com.heliosphere.demeter.base.runner.IRunner;
 import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
 import com.heliosphere.demeter.base.runner.file.xml.execution.XmlExecutionFile;
-import com.heliosphere.demeter.base.runner.parameter.IParameterConfiguration;
-import com.heliosphere.demeter.base.runner.parameter.IParameterExecution;
-import com.heliosphere.demeter.base.runner.parameter.ParameterConfiguration;
-import com.heliosphere.demeter.base.runner.parameter.ParameterExecution;
+import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.configuration.ParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
+import com.heliosphere.demeter.base.runner.parameter.execution.ParameterExecution;
 
 /**
  * A test dedicated to test the loading and saving of a {@link IRunner} XML configuration and execution files.

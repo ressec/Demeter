@@ -13,6 +13,7 @@ package com.heliosphere.demeter.base.runner.parameter;
 
 import com.heliosphere.demeter.base.exception.EnumerationException;
 import com.heliosphere.demeter.base.runner.IRunner;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
 
 import lombok.NonNull;
 

@@ -9,9 +9,11 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.runner.parameter;
+package com.heliosphere.demeter.base.runner.parameter.configuration;
 
 import java.util.List;
+
+import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
 
 /**
  * Defines the behavior of the definition of a parameter.
