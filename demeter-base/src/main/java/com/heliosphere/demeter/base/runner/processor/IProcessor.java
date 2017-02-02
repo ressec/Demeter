@@ -13,7 +13,6 @@ package com.heliosphere.demeter.base.runner.processor;
 
 import java.util.concurrent.Callable;
 
-import com.heliosphere.demeter.base.document.DocumentException;
 import com.heliosphere.demeter.base.element.IElement;
 import com.heliosphere.demeter.base.runner.IRunner;
 import com.heliosphere.demeter.base.runner.context.IContext;
@@ -58,10 +57,9 @@ public interface IProcessor extends IElement<String>, Callable<IExecutionResult>
 	 * Runs the processor.
 	 * <hr>
 	 * In a derived class, a call to super {@code MUST} be done at the end of the overridden method implementation.
-	 * @throws ProcessorException Thrown in case an error occurred with the processor while processing the document.
-	 * @throws DocumentException Thrown in case an error occurred with the document to be processed.
+	 * @throws ProcessorException Thrown in case an error occurred with the processor while processing the entity.
 	 */
-	void process() throws ProcessorException, DocumentException;
+	void process() throws ProcessorException;
 
 	/**
 	 * Returns the context used by the processor.

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.Stopwatch;
-import com.heliosphere.demeter.base.document.DocumentException;
 import com.heliosphere.demeter.base.element.Element;
 import com.heliosphere.demeter.base.element.IElement;
 import com.heliosphere.demeter.base.runner.context.IContext;
@@ -116,7 +115,7 @@ public class AbstractProcessor extends Element<String> implements IProcessor
 	}
 
 	@Override
-	public void process() throws ProcessorException, DocumentException
+	public void process() throws ProcessorException
 	{
 		// To be overridden by sub classes!
 	}

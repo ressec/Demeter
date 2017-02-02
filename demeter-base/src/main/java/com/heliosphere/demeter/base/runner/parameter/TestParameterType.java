@@ -23,7 +23,7 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public enum BasicRunnerParameterType implements IParameterType
+public enum TestParameterType implements IParameterType
 {
 	/**
 	 * This parameter is <b>reserved</b> for internal use.
@@ -67,7 +67,7 @@ public enum BasicRunnerParameterType implements IParameterType
 	* <hr>
 	* @param name Parameter name.
 	*/
-	private BasicRunnerParameterType(@NonNull final String name)
+	private TestParameterType(@NonNull final String name)
 	{
 		this.name = name;
 	}
@@ -82,7 +82,7 @@ public enum BasicRunnerParameterType implements IParameterType
 	@Override
 	public final Enum<? extends IParameterType> fromName(@NonNull final String name) throws EnumerationException
 	{
-		for (BasicRunnerParameterType element : BasicRunnerParameterType.values())
+		for (TestParameterType element : TestParameterType.values())
 		{
 			if (element.getName().equals(name))
 			{

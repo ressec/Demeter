@@ -139,6 +139,13 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 	}
 
 	@Override
+	public final void setParameterProcessed(@NonNull final IParameterExecution parameter)
+	{
+		parameter.setStatus(ParameterStatusType.PROCESSED);
+		getParameters().add(parameter);
+	}
+
+	@Override
 	public final IParameterList<IParameterExecution> getParameters()
 	{
 		return parameters;

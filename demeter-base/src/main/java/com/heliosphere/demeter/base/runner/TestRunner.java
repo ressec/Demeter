@@ -15,7 +15,7 @@ import com.heliosphere.demeter.base.runner.annotation.RunnerConfig;
 import com.heliosphere.demeter.base.runner.annotation.RunnerFile;
 import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
 import com.heliosphere.demeter.base.runner.file.xml.execution.XmlExecutionFile;
-import com.heliosphere.demeter.base.runner.parameter.BasicRunnerParameterType;
+import com.heliosphere.demeter.base.runner.parameter.TestParameterType;
 import com.heliosphere.demeter.base.runner.processor.TestProcessor;
 
 /**
@@ -24,7 +24,7 @@ import com.heliosphere.demeter.base.runner.processor.TestProcessor;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-@RunnerConfig(enumParameterClass = BasicRunnerParameterType.class, processorClass = TestProcessor.class, threadCount = 4)
+@RunnerConfig(enumParameterClass = TestParameterType.class, processorClass = TestProcessor.class, threadCount = 4)
 @RunnerFile(configurationFile = "config/runner/test/runner.test.configuration.xml")
 public class TestRunner extends AbstractRunner
 {

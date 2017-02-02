@@ -115,4 +115,11 @@ public interface IExecutionResult extends IElement<String>
 	 * @param name Thread name.
 	 */
 	void setThreadName(Enum<? extends IParameterType> type, String name);
+
+	/**
+	 * Sets the status of the given parameter as processed.
+	 * <hr>
+	 * @param parameter Parameter to update.
+	 */
+	void setParameterProcessed(IParameterExecution parameter);
 }
