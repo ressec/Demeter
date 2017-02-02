@@ -14,17 +14,19 @@ package com.heliosphere.demeter.base.runner.result;
 import java.util.List;
 
 import com.heliosphere.demeter.base.element.IElement;
+import com.heliosphere.demeter.base.runner.IRunner;
 import com.heliosphere.demeter.base.runner.context.IContext;
 import com.heliosphere.demeter.base.runner.entity.IEntity;
-import com.heliosphere.demeter.base.runner.parameter.IParameterExecution;
-import com.heliosphere.demeter.base.runner.parameter.IParameterType;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
+import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
+import com.heliosphere.demeter.base.runner.parameter.list.IParameterList;
 import com.heliosphere.demeter.base.runner.processor.IProcessor;
 
 /**
- * This interface defines the behavior of an execution result which is the result of the execution of an {@link IEntity} by
- * a {@link IProcessor} launched by a {@link IRunner} using a {@link IContext}.
+ * Defines the behavior of an execution result which is the result of the execution of an {@link IEntity} by a {@link IProcessor} launched by a
+ * {@link IRunner} using a {@link IContext}.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
 public interface IExecutionResult extends IElement<String>
@@ -58,30 +60,16 @@ public interface IExecutionResult extends IElement<String>
 	void setExceptions(List<Exception> exceptions);
 
 	/**
-	 * Returns the thread name used for the execution.
-	 * <hr>
-	 * @return Thread name.
+	 * Returns the elapsed time.
+	 * @return Elapsed time.
 	 */
-	String getThreadName();
-
-	/**
-	 * Sets the thread name to use for the execution.
-	 * <hr>
-	 * @param name Thread name.
-	 */
-	void setThreadName(final String name);
-
-	/**
-	* Returns the elapsed time.
-	* @return Elapsed time.
-	*/
 	String getElapsed();
 
 	/**
-	* Sets the elapsed time the processor took to process the entity.
-	* <hr>
-	* @param time Elapsed time.
-	*/
+	 * Sets the elapsed time the processor took to process the entity.
+	 * <hr>
+	 * @param time Elapsed time.
+	 */
 	void setElapsed(final String time);
 
 	/**
@@ -89,56 +77,49 @@ public interface IExecutionResult extends IElement<String>
 	 * <hr>
 	 * @param parameters List of parameters to set.
 	 */
-	void setParameters(List<IParameterExecution> parameters);
+	void setParameters(IParameterList<IParameterExecution> parameters);
 
 	/**
 	 * Returns the list of parameters used for the execution.
 	 * <hr>
 	 * @return List of parameters.
 	 */
-	List<IParameterExecution> getParameters();
-
-	/**
-	 * Returns an execution parameter given its type.
-	 * <hr>
-	 * @param type Execution parameter type.
-	 * @return Execution parameter if one is found, {@code null} otherwise.
-	 */
-	IParameterExecution getParameter(Enum<? extends IParameterType> type);
-
-	/**
-	 * Returns an execution parameter given its name.
-	 * <hr>
-	 * @param name Execution parameter name.
-	 * @return Execution parameter if one is found, {@code null} otherwise.
-	 */
-	IParameterExecution getParameter(String name);
-
-	/**
-	 * Removes a parameter from the list of the execution parameters used for the execution.
-	 * <hr>
-	 * @param parameter Execution parameter to remove.
-	 */
-	void removeParameter(IParameterExecution parameter);
-
-	/**
-	 * Adds an execution parameter to the context.
-	 * <hr>
-	 * @param parameter Execution parameter to add.
-	 */
-	void addParameter(final IParameterExecution parameter);
+	IParameterList<IParameterExecution> getParameters();
 
 	/**
 	 * Returns the list of the processed execution parameters.
 	 * <hr>
 	 * @return List of processed execution parameters.
 	 */
-	List<IParameterExecution> getProcessedParameters();
+	IParameterList<IParameterExecution> getProcessedParameters();
 
 	/**
 	 * Returns the list of the unprocessed execution parameters.
 	 * <hr>
 	 * @return List of unprocessed execution parameters.
 	 */
-	List<IParameterExecution> getUnprocessedParameters();
+	IParameterList<IParameterExecution> getUnprocessedParameters();
+
+	/**
+	 * Returns the thread name used to process the given parameter type.
+	 * <hr>
+	 * @param type Parameter type.
+	 * @return Thread name.
+	 */
+	String getThreadName(Enum<? extends IParameterType> type);
+
+	/**
+	 * Sets the thread name for the given parameter type.
+	 * <hr>
+	 * @param type Parameter type.
+	 * @param name Thread name.
+	 */
+	void setThreadName(Enum<? extends IParameterType> type, String name);
+
+	/**
+	 * Sets the status of the given parameter as processed.
+	 * <hr>
+	 * @param parameter Parameter to update.
+	 */
+	void setParameterProcessed(IParameterExecution parameter);
 }

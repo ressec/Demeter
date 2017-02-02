@@ -14,12 +14,14 @@ package com.heliosphere.demeter.base.file.xml.base;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.heliosphere.demeter.base.file.FileException;
 import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.thoughtworks.xstream.converters.basic.DateConverter;
 
 import lombok.Getter;
 
@@ -41,6 +43,13 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * XStream date converter.
+	 */
+	@SuppressWarnings("nls")
+	@XStreamOmitField
+	private static final DateConverter dateConverter = new DateConverter("yyyy-MM-dd HH:mm:ss", new String[] {}, TimeZone.getTimeZone("UTC"));
+
+	/**
 	 * XML engine to use.
 	 */
 	@XStreamOmitField
@@ -53,6 +62,7 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 	private void initialize()
 	{
 		engine = new XStream();
+		engine.registerConverter(dateConverter);
 		engine.autodetectAnnotations(true);
 	}
 

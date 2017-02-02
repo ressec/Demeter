@@ -14,11 +14,10 @@ package com.heliosphere.demeter.base.runner;
 import java.util.List;
 
 import com.heliosphere.demeter.base.file.xml.base.IXmlFile;
-import com.heliosphere.demeter.base.runner.context.ContextException;
-import com.heliosphere.demeter.base.runner.parameter.IParameterConfiguration;
-import com.heliosphere.demeter.base.runner.parameter.IParameterExecution;
-import com.heliosphere.demeter.base.runner.parameter.IParameterType;
-import com.heliosphere.demeter.base.runner.parameter.ParameterException;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
+import com.heliosphere.demeter.base.runner.parameter.base.ParameterException;
+import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
 
 /**
  * Defines the behavior of a {@code Runner} which is used as an advanced program launcher.
@@ -30,21 +29,24 @@ public interface IRunner
 {
 	/**
 	 * Returns the XML configuration file used by this runner.
+	 * <hr>
+	 * @return XML configuration file.
 	 */
 	IXmlFile getConfiguration();
 
 	/**
 	 * Returns the XML execution file used by this runner execution.
+	 * <hr>
+	 * @return XML execution file.
 	 */
-	IXmlFile execution = null;
+	IXmlFile getExecution();
 
 	/**
 	 * Initializes the runner.
 	 * <hr>
 	 * @throws RunnerException Thrown in case an error occurred while trying to initialize the runner.
-	 * @throws ContextException Thrown in case an error occurred while trying to initialize a context.
 	 */
-	void initialize() throws RunnerException, ContextException;
+	void initialize() throws RunnerException;
 
 	/**
 	 * Starts the runner.

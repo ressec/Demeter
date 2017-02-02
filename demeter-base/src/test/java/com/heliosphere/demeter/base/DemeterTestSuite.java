@@ -11,20 +11,23 @@
  */
 package com.heliosphere.demeter.base;
 
-import org.junit.experimental.categories.Categories;
-import org.junit.experimental.categories.Categories.IncludeCategory;
 import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.heliosphere.demeter.base.file.xml.test.XmlDefinitionFileTest;
 import com.heliosphere.demeter.base.file.xml.test.XmlFileTest;
-import com.heliosphere.demeter.base.log4j.category.UnitTest;
+import com.heliosphere.demeter.base.file.xml.test.XmlRunnerParameterFileTest;
+import com.heliosphere.demeter.base.resource.bundle.test.ResourceBundleTest;
 import com.heliosphere.demeter.base.resource.test.ResourceTest;
 
-@RunWith(Categories.class)
-@IncludeCategory(UnitTest.class)
-
-@SuiteClasses({ ResourceTest.class, XmlFileTest.class, XmlDefinitionFileTest.class })
+/**
+ * Defines the {@code demeter} unit test suite.
+ * <hr>
+ * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
+@RunWith(Suite.class)
+@SuiteClasses({ ResourceBundleTest.class, ResourceTest.class, XmlFileTest.class, XmlRunnerParameterFileTest.class })
 public class DemeterTestSuite
 {
 	// Empty.

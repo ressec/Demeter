@@ -14,9 +14,26 @@ package com.heliosphere.demeter.base.file.xml.base;
 import com.heliosphere.demeter.base.file.base.IStructuredFile;
 import com.thoughtworks.xstream.XStream;
 
+/**
+ * Defines the behavior of a {@code XML} file having header, content and footer parts.
+ * <hr>
+ * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ * @param 	<H> Header type.
+ * @param 	<C> Content type.
+ * @param 	<F> Footer type.
+ */
 public interface IXmlFile<H, C, F> extends IStructuredFile<H, C, F>
 {
+	/**
+	 * Sets (append) aliases to the XML engine.
+	 */
 	void setAliases();
 
+	/**
+	 * Returns the {@code XML} engine used for serialization/deserialization.
+	 * <hr>
+	 * @return {@code XML} engine used.
+	 */
 	XStream getEngine();
 }

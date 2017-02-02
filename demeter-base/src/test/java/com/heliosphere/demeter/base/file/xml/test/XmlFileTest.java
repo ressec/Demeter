@@ -13,6 +13,8 @@ package com.heliosphere.demeter.base.file.xml.test;
 
 import static org.junit.Assert.fail;
 
+import java.util.Calendar;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -96,7 +98,7 @@ public class XmlFileTest
 			file.setHeader(header);
 
 			Footer footer = new Footer();
-			footer.setGenerated("on 2017/01/20 @ 16:59:05");
+			footer.setGenerated(Calendar.getInstance().getTime());
 			file.setFooter(footer);
 
 			file.addElement(new Content("Washington"));

@@ -15,23 +15,22 @@ import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
-import com.heliosphere.demeter.base.runner.parameter.IParameterConfiguration;
-import com.heliosphere.demeter.base.runner.parameter.ParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
+import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.configuration.ParameterConfiguration;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 
 import lombok.NonNull;
 
 /**
- * Provides a concrete implementation of a {@code Runner} XML definition file.
+ * Provides a concrete implementation of a {@code Runner} XML configuration file.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param <H> - Header type.
- * @param <C> - Content element type.
- * @param <F> - Footer element type.
  */
-public class XmlConfigurationFile<H, C, F> extends AbstractXmlFile<H, C, F>
+public class XmlConfigurationFile extends AbstractXmlFile<Header, IParameterConfiguration, Footer>
 {
 	/**
 	 * Default serialization identifier.
@@ -46,6 +45,69 @@ public class XmlConfigurationFile<H, C, F> extends AbstractXmlFile<H, C, F>
 	public XmlConfigurationFile(final @NonNull String pathname)
 	{
 		super(pathname);
+	}
+
+	/**
+	 * Returns a configuration parameter given a parameter name or alias.
+	 * <hr>
+	 * @param nameOrAlias Parameter name or alias (case sensitive).
+	 * @return {@link IParameterConfiguration} if found, {@code null} otherwise.
+	 */
+	public final IParameterConfiguration getParameter(final @NonNull String nameOrAlias)
+	{
+		for (IParameterConfiguration parameter : getContent())
+		{
+			// Does the parameter name is matching the given name?
+			if (parameter.getName().equals(nameOrAlias))
+			{
+				return parameter;
+			}
+
+			// Does one of the parameter alias (if some are defined) is matching the given alias?
+			if (parameter.getAliases() != null)
+			{
+				for (String alias : parameter.getAliases())
+				{
+					if (alias.equals(nameOrAlias))
+					{
+						return parameter;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns a configuration parameter given a parameter type.
+	 * <hr>
+	 * @param type Parameter type to retrieve.
+	 * @return {@link IParameterConfiguration} if found, {@code null} otherwise.
+	 */
+	public final IParameterConfiguration getParameter(final @NonNull Enum<? extends IParameterType> type)
+	{
+		for (IParameterConfiguration parameter : getContent())
+		{
+			// Does the parameter type is matching the given type?
+			if (parameter.getType() == type)
+			{
+				return parameter;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns a configuration parameter given a parameter.
+	 * <hr>
+	 * @param parameter Parameter to retrieve.
+	 * @return {@link IParameterConfiguration} if found, {@code null} otherwise.
+	 */
+	public final IParameterConfiguration getParameter(final @NonNull IParameter parameter)
+	{
+		return getParameter(parameter.getType());
 	}
 
 	@SuppressWarnings("nls")

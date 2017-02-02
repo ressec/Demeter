@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2016 - Heliosphere Corp.
+ * Copyright(c) 2017 - Heliosphere Corp.
  * ---------------------------------------------------------------------------
  * This file is part of the Heliosphere's project which is licensed under the 
  * Apache license version 2 and use is subject to license terms.
@@ -9,22 +9,23 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.file.xml.model;
-
-import java.util.Date;
-
-import lombok.Getter;
-import lombok.Setter;
+package com.heliosphere.demeter.base.runner.parameter.base;
 
 /**
- * Represents the element that is composing the xml file footer part.
+ * Provides an enumeration of the status of an execution parameter.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class Footer
+public enum ParameterStatusType
 {
-	@Getter
-	@Setter
-	private Date generated;
+	/**
+	 * Parameter is not yet processed.
+	 */
+	UNPROCESSED,
+
+	/**
+	 * Parameter has been processed.
+	 */
+	PROCESSED;
 }

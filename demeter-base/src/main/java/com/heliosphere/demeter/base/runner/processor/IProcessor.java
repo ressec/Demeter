@@ -11,27 +11,25 @@
  */
 package com.heliosphere.demeter.base.runner.processor;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
-import com.heliosphere.demeter.base.document.DocumentException;
 import com.heliosphere.demeter.base.element.IElement;
+import com.heliosphere.demeter.base.runner.IRunner;
 import com.heliosphere.demeter.base.runner.context.IContext;
 import com.heliosphere.demeter.base.runner.entity.IEntity;
 import com.heliosphere.demeter.base.runner.result.IExecutionResult;
 
 /**
- * This interface defines the behavior of an processor used to process an {@link IEntity} 
- * through {@link IContext} initialized by a {@link IRunner}. 
+ * This interface defines the behavior of an processor used to process an {@link IEntity} through {@link IContext} initialized by a {@link IRunner}.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
 public interface IProcessor extends IElement<String>, Callable<IExecutionResult>, Cloneable
 {
 	/**
 	 * Adds a listener that want to be notified of events that occur for this processor.
-	 * <hr> 
+	 * <hr>
 	 * @param listener Listener to add.
 	 */
 	void addProcessorListener(final IProcessorListener listener);
@@ -49,48 +47,33 @@ public interface IProcessor extends IElement<String>, Callable<IExecutionResult>
 	void clearListeners();
 
 	/**
-	* Initializes the processor.
-	* <hr>
-	* @throws ProcessorException Thrown in case an error occurred while trying to initialize the processor.
-	*/
+	 * Initializes the processor.
+	 * <hr>
+	 * @throws ProcessorException Thrown in case an error occurred while trying to initialize the processor.
+	 */
 	void initialize() throws ProcessorException;
 
 	/**
-	* Runs the processor.
-	* <hr>
-	* In a derived class, a call to super {@code MUST} be done at the end of the overridden method implementation.
-	* @throws ProcessorException Thrown in case an error occurred with the processor while processing the document.
-	* @throws DocumentException Thrown in case an error occurred with the document to be processed.
-	*/
-	void process() throws ProcessorException, DocumentException;
-
-	/**
-	 * Retrieves the list of exceptions raised during the execution of the processor.
+	 * Runs the processor.
 	 * <hr>
-	 * @return List of exceptions.
+	 * In a derived class, a call to super {@code MUST} be done at the end of the overridden method implementation.
+	 * @throws ProcessorException Thrown in case an error occurred with the processor while processing the entity.
 	 */
-	List<Exception> getExceptions();
-
-	/**
-	 * Adds an exception to the list of exceptions having been raised during the execution of the processor.
-	 * <hr>
-	 * @param exception Exception to add to the list.
-	 */
-	void addException(Exception exception);
+	void process() throws ProcessorException;
 
 	/**
 	 * Returns the context used by the processor.
 	 * <hr>
 	 * @return Associated context.
 	 */
-	IContext<?> getContext();
+	IContext getContext();
 
 	/**
 	 * Sets the context to be used by the processor.
 	 * <hr>
 	 * @param context Context to set.
 	 */
-	void setContext(IContext<?> context);
+	void setContext(IContext context);
 
 	/**
 	 * Returns the execution result.

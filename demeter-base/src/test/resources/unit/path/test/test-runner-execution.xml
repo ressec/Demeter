@@ -1,0 +1,23 @@
+<xml-execution-file>
+  <header>
+    <company>Heliosphere Ltd.</company>
+    <version>1.0</version>
+    <author>Resse Christophe</author>
+    <description>A simple test xml execution file typically used by a runner.</description>
+  </header>
+  <parameters>
+    <parameter>
+      <!-- Help parameter -->
+      <name>h</name>
+      <value></value>
+    </parameter>
+    <parameter>
+      <!-- Input folder parameter -->
+      <name>i</name>
+      <value>c:/folder/work</value>
+    </parameter>
+  </parameters>
+  <footer>
+    <generated>on 2017/01/26 @ 10:59:58</generated>
+  </footer>
+</xml-execution-file>
