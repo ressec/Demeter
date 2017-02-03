@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.resource.bundle.test;
+package com.heliosphere.demeter.base.resource.bundle;
 
 import static org.junit.Assert.fail;
 
