@@ -83,11 +83,18 @@ public interface IParameterExecution extends IParameter
 	boolean existProperty(String name);
 
 	/**
-	 * Returns the associated definition parameter.
+	 * Returns the associated configuration parameter.
 	 * <hr>
-	 * @return Parameter definition.
+	 * @return Parameter configuration.
 	 */
-	IParameterConfiguration getDefinition();
+	IParameterConfiguration getConfiguration();
+
+	/**
+	 * Sets the associated parameter configuration.
+	 * <hr>
+	 * @param parameter Configuration parameter to set.
+	 */
+	void setConfiguration(IParameterConfiguration parameter);
 
 	/**
 	 * Returns the status of the parameter.

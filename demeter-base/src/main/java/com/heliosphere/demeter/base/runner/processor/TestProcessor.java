@@ -40,7 +40,7 @@ public final class TestProcessor extends AbstractProcessor
 		super.process();
 
 		// Process 'unprocessed' execution parameters only!
-		for (IParameterExecution parameter : getExecutionResult().getUnprocessedParameters().getParameters())
+		for (IParameterExecution parameter : getExecutionResult().getUnprocessedParameters().getElements())
 		{
 			switch ((TestParameterType) parameter.getType())
 			{
@@ -71,11 +71,17 @@ public final class TestProcessor extends AbstractProcessor
 	 * <hr>
 	 * @param parameter Parameter.
 	 */
+	@SuppressWarnings("nls")
 	private final void executeHelp(IParameterExecution parameter)
 	{
 		try
 		{
-			// Do some work here!
+			// Display the help message on the console.
+			System.out.println("TestRunner");
+			System.out.println("  List of available commands:");
+			System.out.println("   * help    (h)  - Display the TestRunner usage.");
+			System.out.println("   * version (v)  - Display the version information of the program.");
+			System.out.println("   * hello   (he) - Display the famous 'hello world' message.");
 		}
 		catch (Exception e)
 		{

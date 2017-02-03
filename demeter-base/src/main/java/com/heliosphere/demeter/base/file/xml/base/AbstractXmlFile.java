@@ -13,7 +13,6 @@ package com.heliosphere.demeter.base.file.xml.base;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.TimeZone;
 
 import com.heliosphere.demeter.base.file.FileException;
@@ -30,9 +29,9 @@ import lombok.Getter;
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param 	<H> Record type of the header. 
- * @param 	<C> Record type of the content.
- * @param 	<F> Record type of the footer.
+ * @param <H> Record type of the header.
+ * @param <C> Record type of the content.
+ * @param <F> Record type of the footer.
  */
 public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H, C, F> implements IXmlFile<H, C, F>
 {
@@ -95,7 +94,7 @@ public abstract class AbstractXmlFile<H, C, F> extends AbstractStructuredFile<H,
 			IXmlFile<?, ?, ?> holder = (IXmlFile<H, C, F>) engine.fromXML(getResource().getFile());
 			setHeader((H) holder.getHeader());
 			setFooter((F) holder.getFooter());
-			setContent((List<C>) holder.getContent());
+			setContent((C) holder.getContent());
 		}
 		catch (XStreamException e)
 		{

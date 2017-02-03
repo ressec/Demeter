@@ -11,13 +11,17 @@
  */
 package com.heliosphere.demeter.base.runner.parameter.base;
 
+import com.heliosphere.demeter.base.runner.entity.IEntityType;
+
+import lombok.NonNull;
+
 /**
  * Provides an abstract implementation of a parameter.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class AbstractParameter implements IParameter
+public abstract class AbstractParameter implements IParameter
 {
 	/**
 	 * Default serialization identifier.
@@ -33,6 +37,11 @@ public class AbstractParameter implements IParameter
 	 * Parameter type.
 	 */
 	private Enum<? extends IParameterType> type;
+
+	/**
+	 * Parameter entity type.
+	 */
+	private Enum<? extends IEntityType> entityType;
 
 	@Override
 	public final String getName()
@@ -53,14 +62,26 @@ public class AbstractParameter implements IParameter
 	}
 
 	@Override
-	public final void setType(Enum<? extends IParameterType> type)
+	public final void setType(@NonNull final Enum<? extends IParameterType> type)
 	{
 		this.type = type;
 	}
 
 	@Override
-	public int compareTo(IParameter o)
+	public int compareTo(final IParameter o)
 	{
 		return name.compareTo(o.getName());
+	}
+
+	@Override
+	public final Enum<? extends IEntityType> getEntityType()
+	{
+		return entityType;
+	}
+
+	@Override
+	public final void setEntityType(@NonNull final Enum<? extends IEntityType> type)
+	{
+		this.entityType = type;
 	}
 }

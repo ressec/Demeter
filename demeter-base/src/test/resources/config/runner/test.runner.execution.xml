@@ -1,0 +1,22 @@
+<xml-execution-file>
+  <header>
+    <company>Heliosphere Ltd.</company>
+    <version>1.0</version>
+    <author>Resse Christophe</author>
+    <description>A simple test xml execution file to be used by the TestRunner.</description>
+  </header>
+ <content>
+ <data>
+    <parameters>
+    <parameter>
+      <!-- Help parameter -->
+      <name>help</name>
+      <value></value>
+    </parameter>
+  </parameters>
+   </data>
+  </content>
+  <footer>
+    <generated>2017-02-03 08:09:03</generated>
+  </footer>
+</xml-execution-file>

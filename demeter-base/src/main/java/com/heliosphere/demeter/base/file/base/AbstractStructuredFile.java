@@ -26,9 +26,9 @@ import lombok.NonNull;
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param 	<H> Record type of the header. 
- * @param 	<C> Record type of the content.
- * @param 	<F> Record type of the footer.
+ * @param <H> Record type of the header.
+ * @param <C> Record type of the content.
+ * @param <F> Record type of the footer.
  */
 public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile implements IStructuredFile<H, C, F>
 {
@@ -38,7 +38,7 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	@XStreamOmitField
 	private static final long serialVersionUID = 1L;
 
-	/** 
+	/**
 	 * File header.
 	 */
 	@XStreamImplicit
@@ -48,6 +48,8 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	/**
 	 * File content.
 	 */
+	//	@XStreamImplicit
+	// TIP: Is defined as a list to avoid XStream to generate a 'class=...' attribute in the XML!
 	private List<C> content;
 
 	/**
@@ -96,15 +98,16 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	}
 
 	@Override
-	public final List<C> getContent()
+	public final C getContent()
 	{
-		return content;
+		return content.size() > 0 ? content.get(0) : null;
 	}
 
 	@Override
-	public final void setContent(List<C> content)
+	public final void setContent(C content)
 	{
-		this.content = content;
+		this.content.clear();
+		this.content.add(content);
 	}
 
 	@Override
@@ -118,19 +121,5 @@ public abstract class AbstractStructuredFile<H, C, F> extends AbstractFile imple
 	{
 		this.footer.clear();
 		this.footer.add(footer);
-	}
-
-	@Override
-	public void addElement(C element)
-	{
-		if (content == null)
-		{
-			content = new ArrayList<>();
-		}
-
-		if (!content.contains(element))
-		{
-			content.add(element);
-		}
 	}
 }

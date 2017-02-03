@@ -11,7 +11,6 @@
  */
 package com.heliosphere.demeter.base.runner.file.xml.configuration;
 
-import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
@@ -19,6 +18,7 @@ import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
 import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
 import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
 import com.heliosphere.demeter.base.runner.parameter.configuration.ParameterConfiguration;
+import com.heliosphere.demeter.base.runner.parameter.list.ParameterList;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 
@@ -30,7 +30,7 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class XmlConfigurationFile extends AbstractXmlFile<Header, IParameterConfiguration, Footer>
+public class XmlConfigurationFile extends AbstractXmlFile<Header, ParameterList<IParameterConfiguration>, Footer>
 {
 	/**
 	 * Default serialization identifier.
@@ -55,7 +55,7 @@ public class XmlConfigurationFile extends AbstractXmlFile<Header, IParameterConf
 	 */
 	public final IParameterConfiguration getParameter(final @NonNull String nameOrAlias)
 	{
-		for (IParameterConfiguration parameter : getContent())
+		for (IParameterConfiguration parameter : getContent().getElements())
 		{
 			// Does the parameter name is matching the given name?
 			if (parameter.getName().equals(nameOrAlias))
@@ -87,7 +87,7 @@ public class XmlConfigurationFile extends AbstractXmlFile<Header, IParameterConf
 	 */
 	public final IParameterConfiguration getParameter(final @NonNull Enum<? extends IParameterType> type)
 	{
-		for (IParameterConfiguration parameter : getContent())
+		for (IParameterConfiguration parameter : getContent().getElements())
 		{
 			// Does the parameter type is matching the given type?
 			if (parameter.getType() == type)
@@ -116,24 +116,6 @@ public class XmlConfigurationFile extends AbstractXmlFile<Header, IParameterConf
 	{
 		super.setAliases();
 
-		ClassAliasingMapper mapper = new ClassAliasingMapper(getEngine().getMapper());
-
-		// Converter for elements of the 'aliases' list in ParameterDefinition class.
-		mapper.addClassAlias("alias", String.class);
-		getEngine().registerLocalConverter(ParameterConfiguration.class, "aliases", new CollectionConverter(mapper));
-
-		// Converter for elements of the 'values' list in ParameterDefinition class.
-		mapper.addClassAlias("value", String.class);
-		getEngine().registerLocalConverter(ParameterConfiguration.class, "values", new CollectionConverter(mapper));
-
-		// Converter for elements of the 'excludes' list in ParameterDefinition class.
-		mapper.addClassAlias("exclude", String.class);
-		getEngine().registerLocalConverter(ParameterConfiguration.class, "excludes", new CollectionConverter(mapper));
-
-		// Converter for elements of the 'includes' list in ParameterDefinition class.
-		mapper.addClassAlias("include", String.class);
-		getEngine().registerLocalConverter(ParameterConfiguration.class, "includes", new CollectionConverter(mapper));
-
 		// Aliases the main file tag.
 		getEngine().alias("xml-configuration-file", this.getClass());
 
@@ -146,7 +128,27 @@ public class XmlConfigurationFile extends AbstractXmlFile<Header, IParameterConf
 		// Aliases the footer tag with the Footer class.
 		getEngine().alias("footer", Footer.class);
 
-		// Aliases the 'content' list as 'parameters'.
-		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "parameters");
+		// Aliases the content tag with the List class.
+		getEngine().alias("data", ParameterList.class);
+
+		// Converter for elements of the 'aliases' list in ParameterDefinition class.
+		ClassAliasingMapper aliasMapper = new ClassAliasingMapper(getEngine().getMapper());
+		aliasMapper.addClassAlias("alias", String.class);
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "aliases", new CollectionConverter(aliasMapper));
+
+		// Converter for elements of the 'values' list in ParameterDefinition class.
+		ClassAliasingMapper valueMapper = new ClassAliasingMapper(getEngine().getMapper());
+		valueMapper.addClassAlias("value", String.class);
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "values", new CollectionConverter(valueMapper));
+
+		// Converter for elements of the 'excludes' list in ParameterDefinition class.
+		ClassAliasingMapper excludeMapper = new ClassAliasingMapper(getEngine().getMapper());
+		excludeMapper.addClassAlias("exclude", String.class);
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "excludes", new CollectionConverter(excludeMapper));
+
+		// Converter for elements of the 'includes' list in ParameterDefinition class.
+		ClassAliasingMapper includeMapper = new ClassAliasingMapper(getEngine().getMapper());
+		includeMapper.addClassAlias("include", String.class);
+		getEngine().registerLocalConverter(ParameterConfiguration.class, "includes", new CollectionConverter(includeMapper));
 	}
 }

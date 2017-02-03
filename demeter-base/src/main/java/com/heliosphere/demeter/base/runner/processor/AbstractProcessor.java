@@ -12,13 +12,14 @@
 package com.heliosphere.demeter.base.runner.processor;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import com.google.common.base.Stopwatch;
 import com.heliosphere.demeter.base.element.Element;
-import com.heliosphere.demeter.base.element.IElement;
 import com.heliosphere.demeter.base.runner.context.IContext;
 import com.heliosphere.demeter.base.runner.result.ExecutionResult;
+import com.heliosphere.demeter.base.runner.result.ExecutionStatusType;
 import com.heliosphere.demeter.base.runner.result.IExecutionResult;
 
 import lombok.NonNull;
@@ -60,7 +61,7 @@ public class AbstractProcessor extends Element<String> implements IProcessor
 	 * <hr>
 	 * @param context Context to process.
 	 */
-	public AbstractProcessor(@NonNull final IContext context)
+	public AbstractProcessor(final IContext context)
 	{
 		super(context.getEntity().getName());
 
@@ -74,8 +75,35 @@ public class AbstractProcessor extends Element<String> implements IProcessor
 	@Override
 	public IExecutionResult call() throws Exception
 	{
-		// TODO Auto-generated method stub
-		return null;
+		try
+		{
+			result.setStatus(ExecutionStatusType.RUNNING);
+
+			try
+			{
+				process();
+				result.setStatus(ExecutionStatusType.SUCESSS);
+			}
+			catch (ConcurrentModificationException e)
+			{
+				result.setStatus(ExecutionStatusType.FAILED);
+				e.printStackTrace();
+			}
+		}
+		catch (ProcessorException e)
+		{
+			result.getExceptions().add(e);
+			result.setStatus(ExecutionStatusType.FAILED);
+		}
+		finally
+		{
+			//result.setThreadName(Thread.currentThread().getName());
+			result.setParameters(getContext().getParameters());
+			watch.stop();
+			result.setElapsed(watch.toString());
+		}
+
+		return result;
 	}
 
 	@Override
@@ -136,12 +164,5 @@ public class AbstractProcessor extends Element<String> implements IProcessor
 	public final IExecutionResult getExecutionResult()
 	{
 		return result;
-	}
-
-	@Override
-	public int compareTo(IElement<String> other)
-	{
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

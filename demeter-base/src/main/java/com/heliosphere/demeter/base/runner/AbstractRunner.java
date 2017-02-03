@@ -12,28 +12,41 @@
 package com.heliosphere.demeter.base.runner;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.google.common.base.Stopwatch;
 import com.heliosphere.demeter.base.file.FileException;
 import com.heliosphere.demeter.base.file.xml.base.IXmlFile;
 import com.heliosphere.demeter.base.runner.annotation.RunnerConfig;
 import com.heliosphere.demeter.base.runner.annotation.RunnerFile;
+import com.heliosphere.demeter.base.runner.context.Context;
 import com.heliosphere.demeter.base.runner.context.IContext;
+import com.heliosphere.demeter.base.runner.entity.Entity;
+import com.heliosphere.demeter.base.runner.entity.EntityType;
+import com.heliosphere.demeter.base.runner.entity.IEntity;
 import com.heliosphere.demeter.base.runner.file.xml.configuration.XmlConfigurationFile;
 import com.heliosphere.demeter.base.runner.file.xml.execution.XmlExecutionFile;
 import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
 import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
 import com.heliosphere.demeter.base.runner.parameter.base.ParameterException;
+import com.heliosphere.demeter.base.runner.parameter.base.ParameterStatusType;
 import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
 import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
 import com.heliosphere.demeter.base.runner.processor.IProcessor;
+import com.heliosphere.demeter.base.runner.processor.ProcessorException;
+import com.heliosphere.demeter.base.runner.result.ExecutionStatusType;
+import com.heliosphere.demeter.base.runner.result.IExecutionResult;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
@@ -81,17 +94,12 @@ public abstract class AbstractRunner implements IRunner
 	/**
 	 * Collection of callables for the multi-threading.
 	 */
-	private List<Callable<IProcessor>> callables = new ArrayList<>();
+	private List<Callable<IExecutionResult>> callables = new ArrayList<>();
 
 	/**
 	 * Collection of futures (for gathering processing results from callables) for multi-threading.
 	 */
-	private List<Future<IProcessor>> futures = null;
-
-	/**
-	 * Collection of delayed futures (for gathering processing results from callables) for multi-threading.
-	 */
-	private List<Future<IProcessor>> delayedFutures = null;
+	private List<Future<IExecutionResult>> futures = null;
 
 	/**
 	 * Watch to measure elapsed time.
@@ -284,30 +292,211 @@ public abstract class AbstractRunner implements IRunner
 			loadConfiguration();
 			loadExecution();
 			validate();
+			prepare();
 		}
-		catch (FileException | ParameterException e)
+		catch (FileException | ParameterException | ProcessorException e)
 		{
 			throw new RunnerException(e);
 		}
 	}
 
 	@Override
-	public final IXmlFile getConfiguration()
+	public final XmlConfigurationFile getConfiguration()
 	{
 		return configuration;
 	}
 
 	@Override
-	public final IXmlFile getExecution()
+	public final XmlExecutionFile getExecution()
 	{
 		return execution;
 	}
 
+	/**
+	 * Prepares the internal runner structure.
+	 * <hr>
+	 * @throws ProcessorException Thrown in case an error occurred while trying to initialize the processor.
+	 */
+	@SuppressWarnings("nls")
+	private void prepare() throws ProcessorException
+	{
+		initializeContexts();
+
+		log.info(" ");
+		log.info(String.format("%1d context(s) have been initialized:", contexts.size()));
+		for (IContext context : contexts)
+		{
+			log.info(String.format("   context for case: [%1s]", context.getEntity().getName()));
+		}
+		log.info(" ");
+	}
+
+	/**
+	 * Initializes the contexts.
+	 * <hr>
+	 * @throws ProcessorException Thrown in case an error occurred while trying to initialize the processor.
+	 */
+	public void initializeContexts() throws ProcessorException
+	{
+		IContext context = null;
+
+		/*
+		 * Create one context per entity to process.
+		 */
+		for (IEntity<?> entity : initializeEntities())
+		{
+			context = new Context(entity, execution.getContent());
+			initializeProcessor(context);
+			contexts.add(context);
+		}
+	}
+
+	/**
+	 * Initializes the processor.
+	 * <hr>
+	 * @param context Context to be processed by the processor.
+	 * @return Initialized processor.
+	 * @throws ProcessorException Thrown in case an error occurred while trying to initialize the processor.
+	 */
+	@SuppressWarnings({ "nls" })
+	private IProcessor initializeProcessor(final IContext context) throws ProcessorException
+	{
+		IProcessor processor = null;
+		Class<?> clazz;
+
+		try
+		{
+			clazz = Class.forName(processorClass.getName());
+			Constructor<?> ctor = clazz.getConstructor(IContext.class);
+			processor = (IProcessor) ctor.newInstance(new Object[] { context });
+			context.setProcessor(processor);
+		}
+		catch (Exception e)
+		{
+			throw new ProcessorException(String.format("Unable to instantiate processor of class: %1s due to: %2s", processorClass.getName(), e.getMessage()));
+		}
+
+		return processor;
+	}
+
+	/**
+	 * Initializes the entities.
+	 * <hr>
+	 * @return List of entities to be processed.
+	 */
+	public List<IEntity<?>> initializeEntities()
+	{
+		List<IEntity<?>> entities = new ArrayList<>();
+
+		// The entities can be initialized (for some of them) using the parameter type.
+		for (IParameterExecution parameter : execution.getContent().getElements())
+		{
+			EntityType type = (EntityType) parameter.getEntityType();
+			switch (type)
+			{
+				case DISPLAY:
+					// Create a fake entity for the context initialization to display a message.
+					IEntity<String> entity = new Entity<>(parameter.getName(), type, null);
+					entities.add(entity);
+					break;
+
+				default:
+					// Do nothing for these entity types!
+				case BATCH:
+				case DAEMON:
+				case FILE:
+				case COMPUTATION:
+				case MESSAGE:
+				case RESERVED:
+					break;
+			}
+
+		}
+
+		return entities;
+	}
+
+	@SuppressWarnings("nls")
 	@Override
 	public void start() throws RunnerException
 	{
-		// TODO Auto-generated method stub
+		log.info(String.format("Runner is starting and dispatching [%1d] context(s) to process underlying entities across [%2d] thread(s) in the thread pool...", contexts.size(), threadCount));
+		log.info(" ");
 
+		ExecutorService executor = Executors.newFixedThreadPool(this.threadCount);
+		for (IContext context : contexts)
+		{
+			callables.add(context.getProcessor());
+		}
+
+		try
+		{
+			futures = executor.invokeAll(callables);
+		}
+		catch (InterruptedException e)
+		{
+			throw new RunnerException("An error occurred due to: " + e.getMessage(), e);
+		}
+
+		log.info("*********************************************************************************************************");
+		log.info("EXECUTION SUMMARY:");
+		log.info(" ");
+		log.info(String.format(" Thread pool size..: [%1d]", threadCount));
+		log.info(String.format(" Configuration file: [%1s]", configuration.getResource().getFile().getName()));
+		log.info(String.format(" Execution file....: [%1s]", execution.getResource().getFile().getName()));
+		log.info(String.format("        Description: %1s", execution.getHeader().getDescription()));
+		log.info(String.format("       Parameter(s):"));
+		IParameterConfiguration configuration = null;
+		for (IParameterExecution p : execution.getContent().getElements())
+		{
+			configuration = p.getConfiguration();
+			log.info(String.format("               name: [%1$-4s], value: [%2$-80s], description: [%3$-100s]", p.getName(), p.getValue(), configuration.getDescription()));
+		}
+		log.info(" ");
+
+		for (Future<IExecutionResult> future : futures)
+		{
+			try
+			{
+				String options = null;
+				IExecutionResult result = future.get();
+
+				for (IParameterExecution parameter : result.getParameters().getElements())
+				{
+					if (parameter.getStatus() == ParameterStatusType.PROCESSED)
+					{
+						options += parameter.getName() + ",";
+					}
+
+					String message = String.format("Context name=[%1$-50s], processing.thread=[%2$-20s], options=[%3$-10s], status=[%4$s], elapsed.time=[%5$s]", StringUtils.abbreviateMiddle(result.getName(), "...", 50), result.getThreadName(parameter.getType()), options, result.getStatus().toString(), result.getElapsed());
+					log.error(message);
+				}
+
+				String message = String.format("Context name=[%1$-50s], options=[%2$-10s], status=[%3$s], elapsed.time=[%4$s]", StringUtils.abbreviateMiddle(result.getName(), "...", 50), options, result.getStatus().toString(), result.getElapsed());
+				if (result.getStatus() == ExecutionStatusType.FAILED)
+				{
+					for (Exception exception : result.getExceptions())
+					{
+						log.error(String.format("Exception caught -> %1s", exception.getMessage()), exception);
+					}
+				}
+				else
+				{
+					log.info(message);
+				}
+			}
+			catch (InterruptedException | ExecutionException e)
+			{
+				throw new RunnerException("An error occurred due to: " + e.getMessage(), e);
+			}
+		}
+
+		executor.shutdown();
+		watch.stop();
+
+		log.info(" ");
+		log.info(String.format("Runner finished processing [%1d] context(s) in a total of [%2s]", contexts.size(), watch.toString()));
+		log.info("*********************************************************************************************************");
 	}
 
 	@Override
@@ -339,38 +528,39 @@ public abstract class AbstractRunner implements IRunner
 	}
 
 	@Override
-	public List<IParameterConfiguration> getDefinitionParameter(Enum<? extends IParameterType> type)
+	public final IParameterConfiguration getConfigurationParameter(Enum<? extends IParameterType> type)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return configuration.getParameter(type);
 	}
 
 	@Override
-	public IParameterConfiguration getDefinitionParameter(String nameOrAlias)
+	public final IParameterConfiguration getConfigurationParameter(@NonNull final String nameOrAlias)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return configuration.getParameter(nameOrAlias);
 	}
 
 	@Override
-	public IParameterExecution getExecutionParameter(Enum<? extends IParameterType> type)
+	public final IParameterConfiguration getConfigurationParameter(@NonNull final IParameterConfiguration parameter)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return configuration.getParameter(parameter);
 	}
 
 	@Override
-	public IParameterExecution getExecutionParameter(String name)
+	public final IParameterExecution getExecutionParameter(@NonNull final Enum<? extends IParameterType> type)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return execution.getParameter(type);
 	}
 
 	@Override
-	public void addExecutionParameter(IParameterExecution execution) throws ParameterException
+	public final IParameterExecution getExecutionParameter(String name)
 	{
-		// TODO Auto-generated method stub
+		return execution.getParameter(name);
+	}
 
+	@Override
+	public final IParameterExecution getExecutionParameter(@NonNull final IParameterExecution parameter)
+	{
+		return execution.getParameter(parameter);
 	}
 
 	/**
@@ -407,7 +597,7 @@ public abstract class AbstractRunner implements IRunner
 	@SuppressWarnings("nls")
 	protected final void validate() throws ParameterException
 	{
-		for (IParameterExecution p : execution.getContent())
+		for (IParameterExecution p : execution.getContent().getElements())
 		{
 			validateParameter(p);
 		}
@@ -430,14 +620,14 @@ public abstract class AbstractRunner implements IRunner
 		IParameterExecution pExecOther;
 
 		// Check incompatible parameters.
-		for (IParameterExecution parameter : execution.getContent())
+		for (IParameterExecution parameter : execution.getContent().getElements())
 		{
 			pConfig = configuration.getParameter(parameter.getType());
 			if (pConfig.getIncompatibleParameters() != null)
 			{
 				for (String name : pConfig.getIncompatibleParameters())
 				{
-					pConfigOther = getDefinitionParameter(name);
+					pConfigOther = getConfigurationParameter(name);
 					pExecOther = getExecutionParameter(pConfigOther.getType());
 
 					if (pExecOther != null)
@@ -449,14 +639,14 @@ public abstract class AbstractRunner implements IRunner
 		}
 
 		// Check required parameters.
-		for (IParameterExecution parameter : execution.getContent())
+		for (IParameterExecution parameter : execution.getContent().getElements())
 		{
 			pConfig = configuration.getParameter(parameter.getType());
 			if (pConfig.getRequiredParameters() != null)
 			{
 				for (String name : pConfig.getRequiredParameters())
 				{
-					pConfigOther = getDefinitionParameter(name);
+					pConfigOther = getConfigurationParameter(name);
 					pExecOther = getExecutionParameter(pConfigOther.getType());
 
 					if (pExecOther == null)
@@ -510,20 +700,24 @@ public abstract class AbstractRunner implements IRunner
 		{
 			method = enumClass.getDeclaredMethod("fromName", String.class);
 
-			for (IParameterConfiguration parameter : configuration.getContent())
+			for (IParameterConfiguration parameter : configuration.getContent().getElements())
 			{
 				value = parameter.getName();
 				parameter.setType((Enum<? extends IParameterType>) method.invoke(o, value));
+				parameter.setEntityType(((IParameterType) parameter.getType()).getEntityType());
 				if (parameter.getType() == null)
 				{
 					throw new ParameterException("No parameter definition found for: " + value);
 				}
 			}
 
-			for (IParameterExecution parameter : execution.getContent())
+			for (IParameterExecution parameter : execution.getContent().getElements())
 			{
 				name = parameter.getName();
-				parameter.setType((Enum<? extends IParameterType>) method.invoke(o, parameter.getName()));
+				parameter.setType((Enum<? extends IParameterType>) method.invoke(o, name));
+				parameter.setEntityType(((IParameterType) parameter.getType()).getEntityType());
+				parameter.setStatus(ParameterStatusType.UNPROCESSED);
+				parameter.setConfiguration(configuration.getParameter(parameter.getType()));
 			}
 		}
 		catch (Exception e)
@@ -548,7 +742,7 @@ public abstract class AbstractRunner implements IRunner
 		for (Enum<? extends IParameterType> e : list)
 		{
 			boolean found = false;
-			for (IParameterConfiguration p : configuration.getContent())
+			for (IParameterConfiguration p : configuration.getContent().getElements())
 			{
 				if (p.getType() == e)
 				{
@@ -558,7 +752,7 @@ public abstract class AbstractRunner implements IRunner
 			}
 			if (!found && !e.toString().equals("UNKNOWN"))
 			{
-				throw new ParameterException(String.format("No parameter definition found for type: %1s, value: %2s in configuration file: %2s", e.toString(), ((IParameterType) e).getName(), configuration.getResource().getFile().getName()));
+				throw new ParameterException(String.format("Unable to find parameter name: '%1s' in file: '%2s' corresponding to enumeration class: %3s for enumerated value: %4s", ((IParameterType) e).getName(), configuration.getResource().getFile().getName(), clazz.getSimpleName(), e.toString()));
 			}
 		}
 	}

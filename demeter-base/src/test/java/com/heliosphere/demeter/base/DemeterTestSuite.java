@@ -15,10 +15,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.heliosphere.demeter.base.file.xml.test.XmlFileTest;
-import com.heliosphere.demeter.base.file.xml.test.XmlRunnerParameterFileTest;
-import com.heliosphere.demeter.base.resource.bundle.test.ResourceBundleTest;
-import com.heliosphere.demeter.base.resource.test.ResourceTest;
+import com.heliosphere.demeter.base.file.xml.XmlFileTest;
+import com.heliosphere.demeter.base.file.xml.XmlRunnerParameterFileTest;
+import com.heliosphere.demeter.base.resource.ResourceTest;
+import com.heliosphere.demeter.base.resource.bundle.ResourceBundleTest;
 
 /**
  * Defines the {@code demeter} unit test suite.

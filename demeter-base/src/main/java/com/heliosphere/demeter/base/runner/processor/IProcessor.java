@@ -25,7 +25,7 @@ import com.heliosphere.demeter.base.runner.result.IExecutionResult;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public interface IProcessor extends IElement<String>, Callable<IExecutionResult>, Cloneable
+public interface IProcessor extends IElement<String>, Callable<IExecutionResult>
 {
 	/**
 	 * Adds a listener that want to be notified of events that occur for this processor.

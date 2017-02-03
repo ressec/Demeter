@@ -9,9 +9,12 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.log4j.category;
+package com.heliosphere.demeter.base.runner.entity;
 
-public interface UnitTest
+public class Entity<T> extends AbstractEntity<T>
 {
-	// Empty.
+	public Entity(String name, Enum<? extends IEntityType> type, T content)
+	{
+		super(name, type, content);
+	}
 }
