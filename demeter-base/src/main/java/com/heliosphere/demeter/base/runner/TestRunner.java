@@ -25,7 +25,7 @@ import com.heliosphere.demeter.base.runner.processor.TestProcessor;
  * @version 1.0.0
  */
 @RunnerConfig(enumParameterClass = TestParameterType.class, processorClass = TestProcessor.class, threadCount = 4)
-@RunnerFile(configurationFile = "config/runner/test/runner.test.configuration.xml")
+@RunnerFile(configurationFile = "config/runner/test.runner.configuration.xml", executionFile = "config/runner/test.runner.execution.xml")
 public class TestRunner extends AbstractRunner
 {
 	/**
