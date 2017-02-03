@@ -9,39 +9,31 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.demeter.base.runner.parameter.base;
+package com.heliosphere.demeter.base.runner.entity;
 
 import com.heliosphere.demeter.base.exception.EnumerationException;
-import com.heliosphere.demeter.base.runner.entity.IEntityType;
 
 /**
- * This interface defines the behavior of enumerations extending the notion of {@code parameter types}.
+ * This interface defines the behavior of enumerations extending the notion of {@code entity types}.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public interface IParameterType
+public interface IEntityType
 {
 	/**
-	 * Creates an enumerated value from a given parameter name.
+	 * Creates an enumerated value from a given name.
 	 * <hr>
-	 * @param name Parameter name.
+	 * @param name Name.
 	 * @return Enumerated value.
 	 * @throws EnumerationException Thrown in case an error occurred while trying to create the enumerated value.
 	 */
-	Enum<? extends IParameterType> fromName(final String name) throws EnumerationException;
+	Enum<? extends IEntityType> fromName(final String name) throws EnumerationException;
 
 	/**
-	 * Returns the parameter name.
+	 * Returns the entity type name.
 	 * <hr>
-	 * @return Parameter name.
+	 * @return Entity type name.
 	 */
 	String getName();
-
-	/**
-	 * Returns the entity type.
-	 * <hr>
-	 * @return Entity type.
-	 */
-	Enum<? extends IEntityType> getEntityType();
 }

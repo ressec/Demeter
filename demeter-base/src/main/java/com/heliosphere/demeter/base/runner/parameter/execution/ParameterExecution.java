@@ -51,9 +51,27 @@ public class ParameterExecution extends AbstractParameter implements IParameterE
 	private Map<String, Object> properties;
 
 	/**
-	 * Parameter definition.
+	 * Parameter configuration.
 	 */
-	private IParameterConfiguration definition;
+	@XStreamOmitField
+	private IParameterConfiguration configuration;
+
+	/**
+	 * Creates a new execution parameter.
+	 */
+	public ParameterExecution()
+	{
+		status = ParameterStatusType.UNPROCESSED;
+	}
+
+	/**
+	 * Creates a new execution parameter given its name.
+	 */
+	public ParameterExecution(@NonNull final String name)
+	{
+		this();
+		setName(name);
+	}
 
 	@Override
 	public final String getValue()
@@ -130,9 +148,15 @@ public class ParameterExecution extends AbstractParameter implements IParameterE
 	}
 
 	@Override
-	public final IParameterConfiguration getDefinition()
+	public final IParameterConfiguration getConfiguration()
 	{
-		return definition;
+		return configuration;
+	}
+
+	@Override
+	public final void setConfiguration(IParameterConfiguration parameter)
+	{
+		this.configuration = parameter;
 	}
 
 	@Override

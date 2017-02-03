@@ -12,19 +12,32 @@
 package com.heliosphere.demeter.base.runner.entity;
 
 import com.heliosphere.demeter.base.element.IElement;
-import com.heliosphere.demeter.base.resource.IResource;
+import com.heliosphere.demeter.base.runner.IRunner;
 import com.heliosphere.demeter.base.runner.processor.IProcessor;
 
 /**
- * This interface defines the behavior of an entity intended to be processed by a {@link IProcessor}
- * through a {@link IRunner}. 
+ * This interface defines the behavior of an entity intended to be processed by a {@link IProcessor} through a {@link IRunner}.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param   <T> Entity type. 
+ * @param <T> Entity type.
  */
 public interface IEntity<T> extends IElement<String>
 {
+	/**
+	 * Returns the entity type.
+	 * <hr>
+	 * @return Entity type.
+	 */
+	Enum<? extends IEntityType> getType();
+
+	/**
+	 * Sets the entity type.
+	 * <hr>
+	 * @param type Entity type to set.
+	 */
+	void setType(Enum<? extends IEntityType> type);
+
 	/**
 	 * Returns the case content.
 	 * <hr>
@@ -38,18 +51,4 @@ public interface IEntity<T> extends IElement<String>
 	 * @param content Case content.
 	 */
 	void setContent(final T content);
-
-	/**
-	 * Returns the output path.
-	 * <hr>
-	 * @return Output path.
-	 */
-	IResource getOutputPath();
-
-	/**
-	 * Sets the output path.
-	 * <hr>
-	 * @param path Output path to set.
-	 */
-	void setOutputPath(IResource path);
 }

@@ -157,7 +157,7 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 		Cloner cloner = new Cloner();
 		IParameterList<IParameterExecution> result = new ParameterList<>();
 
-		for (IParameterExecution parameter : parameters.getParameters())
+		for (IParameterExecution parameter : parameters.getElements())
 		{
 			if (parameter.getStatus() == ParameterStatusType.PROCESSED)
 			{
@@ -175,7 +175,7 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 		Cloner cloner = new Cloner();
 		IParameterList<IParameterExecution> result = new ParameterList<>();
 
-		for (IParameterExecution parameter : parameters.getParameters())
+		for (IParameterExecution parameter : parameters.getElements())
 		{
 			if (parameter.getStatus() == ParameterStatusType.UNPROCESSED)
 			{

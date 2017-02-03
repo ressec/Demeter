@@ -11,12 +11,14 @@
  */
 package com.heliosphere.demeter.base.runner.file.xml.execution;
 
-import com.heliosphere.demeter.base.file.base.AbstractStructuredFile;
 import com.heliosphere.demeter.base.file.xml.base.AbstractXmlFile;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
+import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
 import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
 import com.heliosphere.demeter.base.runner.parameter.execution.ParameterExecution;
+import com.heliosphere.demeter.base.runner.parameter.list.ParameterList;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 
@@ -28,7 +30,7 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class XmlExecutionFile extends AbstractXmlFile<Header, IParameterExecution, Footer>
+public class XmlExecutionFile extends AbstractXmlFile<Header, ParameterList<IParameterExecution>, Footer>
 {
 	/**
 	 * Default serialization identifier.
@@ -45,32 +47,70 @@ public class XmlExecutionFile extends AbstractXmlFile<Header, IParameterExecutio
 		super(pathname);
 	}
 
+	/**
+	 * Returns an execution parameter given a parameter name.
+	 * <hr>
+	 * @param name Parameter name (case sensitive).
+	 * @return {@link IParameterExecution} if found, {@code null} otherwise.
+	 */
+	public final IParameterExecution getParameter(final @NonNull String name)
+	{
+		for (IParameterExecution parameter : getContent().getElements())
+		{
+			// Does the parameter name is matching the given name?
+			if (parameter.getName().equals(name))
+			{
+				return parameter;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns an execution parameter given a parameter type.
+	 * <hr>
+	 * @param type Parameter type to retrieve.
+	 * @return {@link IParameterExecution} if found, {@code null} otherwise.
+	 */
+	public final IParameterExecution getParameter(final @NonNull Enum<? extends IParameterType> type)
+	{
+		for (IParameterExecution parameter : getContent().getElements())
+		{
+			// Does the parameter type is matching the given type?
+			if (parameter.getType() == type)
+			{
+				return parameter;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns an execution parameter given a parameter.
+	 * <hr>
+	 * @param parameter Parameter to retrieve.
+	 * @return {@link IParameterExecution} if found, {@code null} otherwise.
+	 */
+	public final IParameterExecution getParameter(final @NonNull IParameter parameter)
+	{
+		return getParameter(parameter.getType());
+	}
+
 	@SuppressWarnings("nls")
 	@Override
 	public void setAliases()
 	{
 		super.setAliases();
 
-		ClassAliasingMapper mapper = new ClassAliasingMapper(getEngine().getMapper());
-
-		//		// Converter for elements of the 'aliases' list in ParameterExecution class.
-		//		mapper.addClassAlias("alias", String.class);
-		//		getEngine().registerLocalConverter(ParameterExecution.class, "aliases", new CollectionConverter(mapper));
-
 		// Converter for elements of the 'values' list in ParameterExecution class.
+		ClassAliasingMapper mapper = new ClassAliasingMapper(getEngine().getMapper());
 		mapper.addClassAlias("value", String.class);
 		getEngine().registerLocalConverter(ParameterExecution.class, "values", new CollectionConverter(mapper));
 
-		//		// Converter for elements of the 'excludes' list in ParameterExecution class.
-		//		mapper.addClassAlias("exclude", String.class);
-		//		getEngine().registerLocalConverter(ParameterExecution.class, "excludes", new CollectionConverter(mapper));
-
-		//		// Converter for elements of the 'includes' list in ParameterExecution class.
-		//		mapper.addClassAlias("include", String.class);
-		//		getEngine().registerLocalConverter(ParameterExecution.class, "includes", new CollectionConverter(mapper));
-
 		// Aliases the main file tag.
-		getEngine().alias("xml-configuration-file", this.getClass());
+		getEngine().alias("xml-execution-file", this.getClass());
 
 		// Aliases the interface of a parameter execution with its implementation.
 		getEngine().alias("parameter", IParameterExecution.class, ParameterExecution.class);
@@ -81,7 +121,7 @@ public class XmlExecutionFile extends AbstractXmlFile<Header, IParameterExecutio
 		// Aliases the footer tag with the Footer class.
 		getEngine().alias("footer", Footer.class);
 
-		// Aliases the 'content' list as 'parameters'.
-		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "parameters");
+		// Aliases the content tag with the List class.
+		getEngine().alias("data", ParameterList.class);
 	}
 }

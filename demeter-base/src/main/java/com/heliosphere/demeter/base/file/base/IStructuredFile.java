@@ -11,16 +11,14 @@
  */
 package com.heliosphere.demeter.base.file.base;
 
-import java.util.List;
-
 /**
  * Interface defining the behavior of a structured file.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
- * @param 	<H> Type of record representing the file header. 
- * @param 	<C> Type of record constituting the content of the file.
- * @param   <F> Type of record representing the footer of the file.
+ * @param <H> Type of record representing the file header.
+ * @param <C> Type of record representing the the content.
+ * @param <F> Type of record representing the file footer.
  */
 public interface IStructuredFile<H, C, F> extends IFileBase
 {
@@ -43,21 +41,14 @@ public interface IStructuredFile<H, C, F> extends IFileBase
 	 * <hr>
 	 * @return File content.
 	 */
-	List<C> getContent();
+	C getContent();
 
 	/**
 	 * Sets the file content list of elements.
 	 * <hr>
 	 * @param content File content to set.
 	 */
-	void setContent(List<C> content);
-
-	/**
-	 * Adds an element to the file content.
-	 * <hr>
-	 * @param element Element to add to the file content list.
-	 */
-	void addElement(C element);
+	void setContent(C content);
 
 	/**
 	 * Returns the file footer.

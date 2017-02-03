@@ -13,7 +13,9 @@ package com.heliosphere.demeter.base.file.xml;
 
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,7 +24,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.heliosphere.demeter.base.file.xml.model.Content;
 import com.heliosphere.demeter.base.file.xml.model.Footer;
 import com.heliosphere.demeter.base.file.xml.model.Header;
 import com.heliosphere.demeter.base.file.xml.model.SimpleXmlFile;
@@ -88,7 +89,7 @@ public class XmlFileTest
 	{
 		try
 		{
-			SimpleXmlFile<Header, Content, Footer> file = new SimpleXmlFile<>("/unit/path/test/basic-xml-file.xml");
+			SimpleXmlFile<Header, List<String>, Footer> file = new SimpleXmlFile<>("/unit/path/test/basic-xml-file.xml");
 
 			Header header = new Header();
 			header.setCompany("Heliosphere Ltd.");
@@ -101,10 +102,12 @@ public class XmlFileTest
 			footer.setGenerated(Calendar.getInstance().getTime());
 			file.setFooter(footer);
 
-			file.addElement(new Content("Washington"));
-			file.addElement(new Content("Paris"));
-			file.addElement(new Content("London"));
-			file.addElement(new Content("Singapore"));
+			List<String> content = new ArrayList<>();
+			file.setContent(content);
+			content.add("Washington");
+			content.add("Paris");
+			content.add("London");
+			content.add("Singapore");
 
 			file.save();
 
@@ -125,13 +128,13 @@ public class XmlFileTest
 	{
 		try
 		{
-			SimpleXmlFile<Header, Content, Footer> file = new SimpleXmlFile<>("/unit/path/test/basic-xml-file.xml");
+			SimpleXmlFile<Header, List<String>, Footer> file = new SimpleXmlFile<>("/unit/path/test/basic-xml-file.xml");
 			file.load();
 
 			Assert.assertTrue(file != null);
 
 			Assert.assertTrue(file.getHeader().getAuthor().equals("Resse Christophe"));
-			Assert.assertTrue(file.getContent().get(0).getValue().equals("Washington"));
+			Assert.assertTrue(file.getContent().get(0).equals("Washington"));
 		}
 		catch (Exception e)
 		{

@@ -13,10 +13,12 @@ package com.heliosphere.demeter.base.runner.parameter.base;
 
 import java.io.Serializable;
 
+import com.heliosphere.demeter.base.runner.entity.IEntityType;
+
 /**
  * Defines the behavior of a parameter.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
 public interface IParameter extends Serializable, Cloneable, Comparable<IParameter>
@@ -49,4 +51,17 @@ public interface IParameter extends Serializable, Cloneable, Comparable<IParamet
 	 */
 	void setType(final Enum<? extends IParameterType> type);
 
+	/**
+	 * Returns the parameter associated entity type.
+	 * <hr>
+	 * @return Entity type.
+	 */
+	Enum<? extends IEntityType> getEntityType();
+
+	/**
+	 * Sets the entity type associated with the parameter.
+	 * <hr>
+	 * @param type Entity type to set.
+	 */
+	void setEntityType(final Enum<? extends IEntityType> type);
 }

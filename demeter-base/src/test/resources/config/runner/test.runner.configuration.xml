@@ -1,0 +1,84 @@
+<xml-configuration-file>
+
+  <header>
+    <company>Heliosphere Ltd.</company>
+    <version>1.0</version>
+    <author>Resse Christophe</author>
+    <description>A simple test xml configuration file used by a runner.</description>
+  </header>
+
+<content>
+    <data>
+  
+  <parameters>
+
+    <parameter>
+      <name>help</name>
+      <priority>150</priority>
+      <description>Display the help message.</description>
+      <mandatory>false</mandatory>
+      <reserved>false</reserved>
+      <aliases>
+        <alias>h</alias>
+      </aliases>
+      <values>
+      </values>
+      <excludes>
+        <exclude>hello</exclude>
+        <exclude>version</exclude>
+      </excludes>
+      <includes>
+<!--         <include>analyze</include> -->
+      </includes>
+    </parameter>
+
+    <parameter>
+      <name>version</name>
+      <priority>150</priority>
+      <description>Display the version information.</description>
+      <mandatory>false</mandatory>
+      <reserved>false</reserved>
+      <aliases>
+        <alias>v</alias>
+      </aliases>
+      <values>
+      </values>
+      <excludes>
+        <exclude>hello</exclude>
+        <exclude>help</exclude>
+      </excludes>
+      <includes>
+<!--         <include>analyze</include> -->
+      </includes>
+    </parameter>
+
+    <parameter>
+      <name>hello</name>
+      <priority>100</priority>
+      <description>Display the famous hello to the world.</description>
+      <mandatory>false</mandatory>
+      <reserved>false</reserved>
+      <aliases>
+        <alias>he</alias>
+      </aliases>
+      <values>
+      </values>
+      <excludes>
+        <exclude>version</exclude>
+        <exclude>help</exclude>
+      </excludes>
+      <includes>
+<!--         <include>analyze</include> -->
+      </includes>
+    </parameter>
+
+  </parameters>
+   </data>
+  </content>
+  
+
+  <footer>
+    <generated>2017-02-03 08:09:03</generated>
+  </footer>
+
+</xml-configuration-file>

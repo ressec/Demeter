@@ -13,6 +13,8 @@ package com.heliosphere.demeter.base.runner.parameter;
 
 import com.heliosphere.demeter.base.exception.EnumerationException;
 import com.heliosphere.demeter.base.runner.IRunner;
+import com.heliosphere.demeter.base.runner.entity.EntityType;
+import com.heliosphere.demeter.base.runner.entity.IEntityType;
 import com.heliosphere.demeter.base.runner.parameter.base.IParameterType;
 
 import lombok.NonNull;
@@ -23,53 +25,57 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
+@SuppressWarnings("nls")
 public enum TestParameterType implements IParameterType
 {
 	/**
 	 * This parameter is <b>reserved</b> for internal use.
 	 * <hr>
-	 * NEVER DELETE THIS ENTRY! 
+	 * NEVER DELETE THIS ENTRY!
 	 */
-	@SuppressWarnings("nls")
-	UNKNOWN(""),
+	UNKNOWN("", EntityType.DISPLAY),
 
 	/**
 	 * Help parameter.
 	 * <hr>
 	 * This parameter is used to display the help of the options of the program handled by the runner.
 	 */
-	@SuppressWarnings("nls")
-	PARAMETER_HELP("h"),
+	PARAMETER_HELP("help", EntityType.DISPLAY),
 
 	/**
 	 * Version parameter.
 	 * <hr>
 	 * This parameter is used to display the version number of the program handled by the runner.
 	 */
-	@SuppressWarnings("nls")
-	PARAMETER_VERSION("v"),
+	PARAMETER_VERSION("version", EntityType.DISPLAY),
 
 	/**
 	 * Hello parameter.
 	 * <hr>
 	 * This parameter is used to display the famous "Hello World" sentence.
 	 */
-	@SuppressWarnings("nls")
-	PARAMETER_HELLO("h");
+	PARAMETER_HELLO("hello", EntityType.DISPLAY);
 
 	/**
-	* Parameter name.
-	*/
+	 * Parameter name.
+	 */
 	private final String name;
 
 	/**
-	* Creates a new enumerated value based on a parameter value.
-	* <hr>
-	* @param name Parameter name.
-	*/
-	private TestParameterType(@NonNull final String name)
+	 * Entity type.
+	 */
+	private final Enum<? extends IEntityType> entityType;
+
+	/**
+	 * Creates a new enumerated value based on a parameter value.
+	 * <hr>
+	 * @param name Parameter name.
+	 * @param type Entity type.
+	 */
+	private TestParameterType(@NonNull final String name, @NonNull final Enum<? extends IEntityType> type)
 	{
 		this.name = name;
+		this.entityType = type;
 	}
 
 	@Override
@@ -78,7 +84,6 @@ public enum TestParameterType implements IParameterType
 		return name;
 	}
 
-	@SuppressWarnings("nls")
 	@Override
 	public final Enum<? extends IParameterType> fromName(@NonNull final String name) throws EnumerationException
 	{
@@ -90,6 +95,12 @@ public enum TestParameterType implements IParameterType
 			}
 		}
 
-		throw new EnumerationException("Unable to create for enumeration " + this.getClass().getSimpleName() + ", enumeated value for name: " + name);
+		throw new EnumerationException("Unable to create for enumeration: " + this.getClass().getSimpleName() + " an enumeated value for name: " + name);
+	}
+
+	@Override
+	public final Enum<? extends IEntityType> getEntityType()
+	{
+		return entityType;
 	}
 }

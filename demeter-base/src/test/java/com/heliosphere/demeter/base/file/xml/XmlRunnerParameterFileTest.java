@@ -31,6 +31,7 @@ import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterCon
 import com.heliosphere.demeter.base.runner.parameter.configuration.ParameterConfiguration;
 import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
 import com.heliosphere.demeter.base.runner.parameter.execution.ParameterExecution;
+import com.heliosphere.demeter.base.runner.parameter.list.ParameterList;
 
 /**
  * A test dedicated to test the loading and saving of a {@link IRunner} XML configuration and execution files.
@@ -106,6 +107,7 @@ public class XmlRunnerParameterFileTest
 			footer.setGenerated(Calendar.getInstance().getTime());
 			file.setFooter(footer);
 
+			ParameterList<IParameterConfiguration> content = new ParameterList<>();
 			IParameterConfiguration p = new ParameterConfiguration();
 			p.setName("section");
 			p.setDescription("Processes a specific section.");
@@ -121,7 +123,9 @@ public class XmlRunnerParameterFileTest
 			p.addAllowed("TAK");
 			p.addAllowed("CUY");
 			p.addAllowed("WTRZ");
-			file.addElement(p);
+			content.add(p);
+
+			file.setContent(content);
 
 			file.save();
 
@@ -175,15 +179,18 @@ public class XmlRunnerParameterFileTest
 			footer.setGenerated(Calendar.getInstance().getTime());
 			file.setFooter(footer);
 
+			ParameterList<IParameterExecution> content = new ParameterList<>();
 			IParameterExecution help = new ParameterExecution();
 			help.setName("h"); // Name or alias can be injected here.
 			help.setValue("");
-			file.addElement(help);
+			content.add(help);
 
 			IParameterExecution input = new ParameterExecution();
 			input.setName("i"); // Name or alias can be injected here.
 			input.setValue("c:/temp/work");
-			file.addElement(input);
+			content.add(input);
+
+			file.setContent(content);
 
 			file.save();
 

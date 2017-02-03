@@ -31,18 +31,18 @@ public interface IParameterList<T extends IParameter>
 	void clear();
 
 	/**
-	 * Returns the list of parameters.
+	 * Returns the elements of the list.
 	 * <hr>
-	 * @return List of parameters.
+	 * @return List of elements.
 	 */
-	List<T> getParameters();
+	List<T> getElements();
 
 	/**
-	 * Sets the list of parameters.
+	 * Sets the list of elements.
 	 * <hr>
-	 * @param parameters List of parameters to set.
+	 * @param elements List of elements to set.
 	 */
-	void setParameters(List<T> parameters);
+	void setElements(List<T> elements);
 
 	/**
 	 * Returns a parameter given its type.

@@ -34,15 +34,15 @@ public final class ParameterList<T extends IParameter> implements IParameterList
 	private List<T> parameters;
 
 	@Override
-	public final List<T> getParameters()
+	public final List<T> getElements()
 	{
 		return parameters;
 	}
 
 	@Override
-	public final void setParameters(@NonNull final List<T> parameters)
+	public final void setElements(@NonNull final List<T> elements)
 	{
-		this.parameters = parameters;
+		this.parameters = elements;
 	}
 
 	@Override
