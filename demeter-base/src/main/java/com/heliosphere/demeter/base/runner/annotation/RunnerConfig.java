@@ -19,10 +19,10 @@ import com.heliosphere.demeter.base.runner.IRunner;
 import com.heliosphere.demeter.base.runner.processor.IProcessor;
 
 /**
- * This annotation is used exclusively to annotate a {@link IRunner} type. It defines the 
- * enumeration class used for the parameters and the processor class to be used by the runner.
+ * This annotation is used exclusively to annotate a {@link IRunner} implementation type. It defines the enumeration class used for the parameters and
+ * the processor class to be used by the runner.
  * <hr>
- * @author  <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
 @Target({ java.lang.annotation.ElementType.TYPE })
@@ -30,21 +30,24 @@ import com.heliosphere.demeter.base.runner.processor.IProcessor;
 public @interface RunnerConfig
 {
 	/**
-	 * Enumeration parameter class.
+	 * Enumeration parameter class to be used.
+	 * <hr>
 	 * @return Enumeration parameter class.
 	 */
 	@SuppressWarnings("rawtypes")
 	Class enumParameterClass();
 
 	/**
-	 * Processor class to be used by this runner.
+	 * Processor class to be used.
+	 * <hr>
 	 * @return Processor class.
 	 */
 	Class<? extends IProcessor> processorClass();
 
 	/**
-	 * Maximum number of threads to use.
-	 * @return Number of threads to use.
+	 * Maximum number of threads to use for multi-threading.
+	 * <hr>
+	 * @return Number of threads.
 	 */
 	int threadCount() default 1;
 }
