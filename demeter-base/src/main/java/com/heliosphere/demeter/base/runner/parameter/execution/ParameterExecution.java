@@ -17,6 +17,7 @@ import java.util.Map;
 import com.heliosphere.demeter.base.runner.parameter.base.AbstractParameter;
 import com.heliosphere.demeter.base.runner.parameter.base.ParameterStatusType;
 import com.heliosphere.demeter.base.runner.parameter.configuration.IParameterConfiguration;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import lombok.NonNull;
 
@@ -41,6 +42,7 @@ public class ParameterExecution extends AbstractParameter implements IParameterE
 	/**
 	 * Parameter status.
 	 */
+	@XStreamOmitField
 	private ParameterStatusType status = ParameterStatusType.UNPROCESSED;
 
 	/**
