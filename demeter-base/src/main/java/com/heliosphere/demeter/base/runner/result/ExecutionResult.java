@@ -22,7 +22,6 @@ import com.heliosphere.demeter.base.runner.parameter.base.ParameterStatusType;
 import com.heliosphere.demeter.base.runner.parameter.execution.IParameterExecution;
 import com.heliosphere.demeter.base.runner.parameter.list.IParameterList;
 import com.heliosphere.demeter.base.runner.parameter.list.ParameterList;
-import com.rits.cloning.Cloner;
 
 import lombok.NonNull;
 
@@ -54,6 +53,11 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 	 * Thread names used to run the processor' parameters.
 	 */
 	private Map<Enum<? extends IParameterType>, String> threads;
+
+	/**
+	 * Elapsed execution time of the underlying processor.
+	 */
+	private String elapsed;
 
 	/**
 	 * Creates a new execution result given a name.
@@ -112,17 +116,15 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 	}
 
 	@Override
-	public String getElapsed()
+	public final String getElapsed()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return elapsed;
 	}
 
 	@Override
-	public void setElapsed(String time)
+	public final void setElapsed(@NonNull final String time)
 	{
-		// TODO Auto-generated method stub
-
+		elapsed = time;
 	}
 
 	@Override
@@ -142,7 +144,7 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 	public final void setParameterProcessed(@NonNull final IParameterExecution parameter)
 	{
 		parameter.setStatus(ParameterStatusType.PROCESSED);
-		getParameters().add(parameter);
+		//getParameters().add(parameter);
 	}
 
 	@Override
@@ -154,15 +156,15 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 	@Override
 	public final IParameterList<IParameterExecution> getProcessedParameters()
 	{
-		Cloner cloner = new Cloner();
+		//		Cloner cloner = new Cloner();
 		IParameterList<IParameterExecution> result = new ParameterList<>();
 
 		for (IParameterExecution parameter : parameters.getElements())
 		{
 			if (parameter.getStatus() == ParameterStatusType.PROCESSED)
 			{
-				IParameterExecution clone = cloner.deepClone(parameter);
-				result.add(clone);
+				//				IParameterExecution clone = cloner.deepClone(parameter);
+				result.add(parameter);
 			}
 		}
 
@@ -172,15 +174,15 @@ public class ExecutionResult extends AbstractElement<String> implements IExecuti
 	@Override
 	public final IParameterList<IParameterExecution> getUnprocessedParameters()
 	{
-		Cloner cloner = new Cloner();
+		//		Cloner cloner = new Cloner();
 		IParameterList<IParameterExecution> result = new ParameterList<>();
 
 		for (IParameterExecution parameter : parameters.getElements())
 		{
 			if (parameter.getStatus() == ParameterStatusType.UNPROCESSED)
 			{
-				IParameterExecution clone = cloner.deepClone(parameter);
-				result.add(clone);
+				//				IParameterExecution clone = cloner.deepClone(parameter);
+				result.add(parameter);
 			}
 		}
 

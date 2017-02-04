@@ -12,6 +12,7 @@
 package com.heliosphere.demeter.base.runner.parameter.list;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.heliosphere.demeter.base.runner.parameter.base.IParameter;
@@ -82,6 +83,8 @@ public final class ParameterList<T extends IParameter> implements IParameterList
 	@Override
 	public final void add(@NonNull final T parameter)
 	{
+		T old = null;
+
 		if (parameters == null)
 		{
 			parameters = new ArrayList<>();
@@ -91,11 +94,21 @@ public final class ParameterList<T extends IParameter> implements IParameterList
 		{
 			if (element.getType() == parameter.getType())
 			{
-				return; // Parameter of this type already exist!
+				old = parameter;
 			}
 		}
 
-		parameters.add(parameter);
+		/*
+		 * If the parameter already exist, replace it, otherwise add it!
+		 */
+		if (old != null)
+		{
+			Collections.replaceAll(parameters, old, parameter);
+		}
+		else
+		{
+			parameters.add(parameter);
+		}
 	}
 
 	@Override
