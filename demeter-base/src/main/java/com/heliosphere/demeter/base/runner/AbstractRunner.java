@@ -326,7 +326,7 @@ public abstract class AbstractRunner implements IRunner
 		log.info(String.format("%1d context(s) have been initialized:", contexts.size()));
 		for (IContext context : contexts)
 		{
-			log.info(String.format("   context for case: [%1s]", context.getEntity().getName()));
+			log.info(String.format("   context for entity name: [%1s], type: [%2s]", context.getEntity().getName(), context.getEntity().getType()));
 		}
 		log.info(" ");
 	}
@@ -420,7 +420,7 @@ public abstract class AbstractRunner implements IRunner
 	@Override
 	public void start() throws RunnerException
 	{
-		log.info(String.format("Runner is starting and dispatching [%1d] context(s) to process underlying entities across [%2d] thread(s) in the thread pool...", contexts.size(), threadCount));
+		log.info(String.format("Runner started: dispatching [%1d] context(s) across [%2d] thread(s).", contexts.size(), threadCount));
 		log.info(" ");
 
 		ExecutorService executor = Executors.newFixedThreadPool(this.threadCount);
@@ -450,7 +450,7 @@ public abstract class AbstractRunner implements IRunner
 		for (IParameterExecution p : execution.getContent().getElements())
 		{
 			configuration = p.getConfiguration();
-			log.info(String.format("               name: [%1$-4s], value: [%2$-80s], description: [%3$-100s]", p.getName(), p.getValue(), configuration.getDescription()));
+			log.info(String.format("               type:[%1s], name:[%2s], value:[%3s], description:[%4s]", p.getType(), p.getName(), p.getValue(), configuration.getDescription()));
 		}
 		log.info(" ");
 
@@ -458,31 +458,19 @@ public abstract class AbstractRunner implements IRunner
 		{
 			try
 			{
-				String options = null;
 				IExecutionResult result = future.get();
 
-				for (IParameterExecution parameter : result.getParameters().getElements())
-				{
-					if (parameter.getStatus() == ParameterStatusType.PROCESSED)
-					{
-						options += parameter.getName() + ",";
-					}
+				// Dump the execution result of the execution of a processor.
+				String message = String.format("Context name:[%1s], status:[%2s], execution:[%4s]", StringUtils.abbreviateMiddle(result.getName(), "...", 50), result.getStatus().toString(), result.getElapsed());
+				log.error(message);
 
-					String message = String.format("Context name=[%1$-50s], processing.thread=[%2$-20s], options=[%3$-10s], status=[%4$s], elapsed.time=[%5$s]", StringUtils.abbreviateMiddle(result.getName(), "...", 50), result.getThreadName(parameter.getType()), options, result.getStatus().toString(), result.getElapsed());
-					log.error(message);
-				}
-
-				String message = String.format("Context name=[%1$-50s], options=[%2$-10s], status=[%3$s], elapsed.time=[%4$s]", StringUtils.abbreviateMiddle(result.getName(), "...", 50), options, result.getStatus().toString(), result.getElapsed());
+				// If process has failed, then dump the exceptions!
 				if (result.getStatus() == ExecutionStatusType.FAILED)
 				{
 					for (Exception exception : result.getExceptions())
 					{
-						log.error(String.format("Exception caught -> %1s", exception.getMessage()), exception);
+						log.error(String.format("   Exception caught -> %1s", exception.getMessage()), exception);
 					}
-				}
-				else
-				{
-					log.info(message);
 				}
 			}
 			catch (InterruptedException | ExecutionException e)
@@ -495,7 +483,7 @@ public abstract class AbstractRunner implements IRunner
 		watch.stop();
 
 		log.info(" ");
-		log.info(String.format("Runner finished processing [%1d] context(s) in a total of [%2s]", contexts.size(), watch.toString()));
+		log.info(String.format("Runner finished processing: [%1d] context(s) in a total of: [%2s]", contexts.size(), watch.toString()));
 		log.info("*********************************************************************************************************");
 	}
 

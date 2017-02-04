@@ -98,7 +98,7 @@ public class AbstractProcessor extends Element<String> implements IProcessor
 		finally
 		{
 			//result.setThreadName(Thread.currentThread().getName());
-			result.setParameters(getContext().getParameters());
+			//result.setParameters(getContext().getParameters());
 			watch.stop();
 			result.setElapsed(watch.toString());
 		}
